@@ -16,7 +16,7 @@ public class RateController{
 
     @Autowired
     public RateController(
-            @Qualifier("slidingWindow") RateLimiter rateLimiter
+            @Qualifier("token-bucket-rate-limiter") RateLimiter rateLimiter
     ) {
         this.rateLimiter = rateLimiter;
     }
