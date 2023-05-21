@@ -1,22 +1,24 @@
 package org.example.ratelimiter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
 @Component
-public class FixedWindowRateLimiter implements RateLimiter{
+@Qualifier("slidingWindow")
+public class SlidingWindowRateLimiter implements RateLimiter {
+
     private static final String KEY_NAME = "rate";
     private final int limit;
     private final int windowDuration; // in seconds
     private final Jedis jedis;
 
     @Autowired
-    public FixedWindowRateLimiter(
+    public SlidingWindowRateLimiter(
             @Value("10") int limit,
             @Value("60") int windowDuration,
             Jedis jedis) {
@@ -28,24 +30,23 @@ public class FixedWindowRateLimiter implements RateLimiter{
     @Override
     public boolean isAllowed(String clientId) {
         boolean result = false;
-        int count = getCount(clientId);
+        long currentTime = Instant.now().getEpochSecond();
+        long windowStart = currentTime - windowDuration;
+        long count = getCount(clientId);
+        removeRecordByScore(clientId, windowStart);
         if (count < limit) {
-            jedis.hincrBy(KEY_NAME, clientId, 1);
-            long timeLeft = getLeftTime();
-            jedis.expire(KEY_NAME, timeLeft);
+            jedis.zadd(clientId, currentTime, String.valueOf(currentTime));
+            jedis.expire(clientId, windowDuration);
             result = true;
         }
         return result;
     }
 
-    private int getCount(String clientId) {
-        return jedis.hget(KEY_NAME, clientId) == null ?
-                0 : Integer.parseInt(jedis.hget(KEY_NAME, clientId));
+    private void removeRecordByScore(String clientId, long windowStart) {
+        jedis.zremrangeByScore(clientId, 0, windowStart);
     }
 
-    private long getLeftTime() {
-    	return windowDuration - Instant.now().getEpochSecond()
-                + Instant.now().truncatedTo(ChronoUnit.MINUTES).getEpochSecond();
+    private long getCount(String clientId) {
+        return jedis.zcard(clientId);
     }
 }
-
