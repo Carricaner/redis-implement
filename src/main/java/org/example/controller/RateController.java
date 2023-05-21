@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.example.FixedWindowRateLimiter;
+import org.example.ratelimiter.RateLimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class RateController {
+public class RateController{
 
-    final FixedWindowRateLimiter rateLimiter;
+    final RateLimiter rateLimiter;
 
     @Autowired
-    public RateController(FixedWindowRateLimiter rateLimiter) {
+    public RateController(RateLimiter rateLimiter) {
         this.rateLimiter = rateLimiter;
     }
 
@@ -25,7 +25,7 @@ public class RateController {
             ipAddress = request.getRemoteAddr();
         }
         if ("0:0:0:0:0:0:0:1".equalsIgnoreCase(ipAddress)) {
-            ipAddress = "000000000";
+            ipAddress = "0000";
         }
         return rateLimiter.isAllowed(ipAddress) ? "success" : "fail";
     }
