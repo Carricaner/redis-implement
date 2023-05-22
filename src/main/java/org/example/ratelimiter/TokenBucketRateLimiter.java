@@ -14,9 +14,7 @@ import java.util.Map;
 @Qualifier("token-bucket-rate-limiter")
 public class TokenBucketRateLimiter implements RateLimiter {
     private static final String KEY_PREFIX = "rate:";
-    private static final String FIELD_NAME_CAPACITY = "capacity";
     private static final String FIELD_NAME_TOKENS = "tokens";
-    private static final String FIELD_NAME_REFILL_RATE = "refillRate";
     private static final String FIELD_NAME_LAST_REFILL_TIME = "lastRefillTime";
 
     private final int capacity;
@@ -43,9 +41,7 @@ public class TokenBucketRateLimiter implements RateLimiter {
             return;
         }
         Transaction transaction = jedis.multi();
-        transaction.hset(getKey(clientId), FIELD_NAME_CAPACITY, String.valueOf(capacity));
         transaction.hset(getKey(clientId), FIELD_NAME_TOKENS, String.valueOf(capacity));
-        transaction.hset(getKey(clientId), FIELD_NAME_REFILL_RATE, String.valueOf(refillRate));
         transaction.hset(getKey(clientId), FIELD_NAME_LAST_REFILL_TIME, String.valueOf(Instant.now().getEpochSecond()));
         transaction.exec();
     }
@@ -78,7 +74,7 @@ public class TokenBucketRateLimiter implements RateLimiter {
     }
 
     private boolean needRefill(long currentTime, long lastRefillTime) {
-        return  (currentTime - lastRefillTime) / 60 > 0;
+        return (currentTime - lastRefillTime) / 60 > 0;
     }
 
     private int getNewTokenNumber(TokenBucketInfo bucketInfo, long currentTime) {
@@ -91,28 +87,16 @@ public class TokenBucketRateLimiter implements RateLimiter {
     }
 
     private static class TokenBucketInfo {
-        private final int capacity;
         private final int tokens;
-        private final int refillRate;
         private final long lastRefillTime;
 
         public TokenBucketInfo(Map<String, String> bucketData) {
-            this.capacity = Integer.parseInt(bucketData.get(FIELD_NAME_CAPACITY));
             this.tokens = Integer.parseInt(bucketData.get(FIELD_NAME_TOKENS));
-            this.refillRate = Integer.parseInt(bucketData.get(FIELD_NAME_REFILL_RATE));
             this.lastRefillTime = Long.parseLong(bucketData.get(FIELD_NAME_LAST_REFILL_TIME));
-        }
-
-        public int getCapacity() {
-            return capacity;
         }
 
         public int getTokens() {
             return tokens;
-        }
-
-        public int getRefillRate() {
-            return refillRate;
         }
 
         public long getLastRefillTime() {

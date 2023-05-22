@@ -1,2 +1,2 @@
-rootProject.name = "pratice-redis"
+rootProject.name = "redis-implementation"
 
