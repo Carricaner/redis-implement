@@ -12,13 +12,13 @@ import java.time.temporal.ChronoUnit;
 public class FixedWindowRateLimiter implements RateLimiter{
     private static final String KEY_NAME = "rate";
     private final int limit;
-    private final int windowDuration; // in seconds
+    private final int windowDuration;
     private final Jedis jedis;
 
     @Autowired
     public FixedWindowRateLimiter(
-            @Value("10") int limit,
-            @Value("60") int windowDuration,
+            @Value("${server.rateLimiter.properties.limitCapacity:10}") int limit,
+            @Value("${server.rateLimiter.properties.windowDuration:60}") int windowDuration,
             Jedis jedis) {
         this.limit = limit;
         this.windowDuration = windowDuration;

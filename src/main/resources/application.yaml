@@ -2,3 +2,17 @@ spring:
   redis:
     host: localhost
     port: 6380
+
+server:
+  rateLimiter:
+    # type options includes: `sliding-window`, `fixed-window`, `token-bucket`, `leaky-bucket`
+    type: sliding-window
+    properties:
+      # `sliding-window` requires limitCapacity & window-duration
+      # `fixed-window` requires limitCapacity & window-duration
+      # `token-bucket` requires limitCapacity & refillRate
+      # `leaky-bucket` requires limitCapacity & leakingRate
+      limitCapacity: 10
+      windowDuration: 60 # in seconds
+      refillRate: 10 # pieces/min
+      leakingRate: 10 # pieces/min

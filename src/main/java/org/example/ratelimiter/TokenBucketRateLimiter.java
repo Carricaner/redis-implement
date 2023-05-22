@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.Map;
 
 @Component
-@Qualifier("token-bucket-rate-limiter")
+@Qualifier("token-bucket")
 public class TokenBucketRateLimiter implements RateLimiter {
     private static final String KEY_PREFIX = "rate:";
     private static final String FIELD_NAME_TOKENS = "tokens";
@@ -24,8 +24,8 @@ public class TokenBucketRateLimiter implements RateLimiter {
 
     @Autowired
     public TokenBucketRateLimiter(
-            @Value("10") int capacity, // At most 10 tokens stored in the bucket at a time
-            @Value("10") int refillRate, // 10 tokens per minute
+            @Value("${server.rateLimiter.properties.limitCapacity:10}") int capacity,
+            @Value("${server.rateLimiter.properties.refillRate:10}") int refillRate,
             Jedis jedis) {
         this.capacity = capacity;
         this.refillRate = refillRate;

@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.Map;
 
 @Component
-@Qualifier("leaking-bucket-rate-limiter")
+@Qualifier("leaky-bucket")
 public class LeakyBucketRateLimiter implements RateLimiter {
     private static final String KEY_PREFIX = "rate:";
     private static final String FIELD_NAME_TOKENS = "tokens";
@@ -23,8 +23,8 @@ public class LeakyBucketRateLimiter implements RateLimiter {
 
     @Autowired
     public LeakyBucketRateLimiter(
-            @Value("10") int capacity,
-            @Value("10") int leakingRate,
+            @Value("${server.rateLimiter.properties.limitCapacity:10}") int capacity,
+            @Value("${server.rateLimiter.properties.refillRate:10}") int leakingRate,
             Jedis jedis) {
         this.capacity = capacity;
         this.leakingRate = leakingRate;

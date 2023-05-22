@@ -16,7 +16,7 @@ public class RateController{
 
     @Autowired
     public RateController(
-            @Qualifier("leaking-bucket-rate-limiter") RateLimiter rateLimiter
+            @Qualifier("leaky-bucket") RateLimiter rateLimiter
     ) {
         this.rateLimiter = rateLimiter;
     }
