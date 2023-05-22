@@ -3,6 +3,8 @@ package org.example.ratelimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.data.redis.connection.jedis.JedisConnection;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
@@ -20,16 +22,14 @@ public class TokenBucketRateLimiter implements RateLimiter {
     private final int capacity;
     private final int refillRate;
     private static final int TOKEN_NUMBER_TO_BE_CONSUMED = 1;
-    private final Jedis jedis;
+    private final Jedis jedis = new Jedis("localhost", 6380); // temp
 
     @Autowired
     public TokenBucketRateLimiter(
             @Value("${server.rateLimiter.properties.limitCapacity:10}") int capacity,
-            @Value("${server.rateLimiter.properties.refillRate:10}") int refillRate,
-            Jedis jedis) {
+            @Value("${server.rateLimiter.properties.refillRate:10}") int refillRate) {
         this.capacity = capacity;
         this.refillRate = refillRate;
-        this.jedis = jedis;
     }
 
     private String getKey(String clientId) {

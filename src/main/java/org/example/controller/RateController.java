@@ -2,27 +2,43 @@ package org.example.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.ratelimiter.RateLimiter;
+import org.example.repository.redis.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/rate")
 public class RateController{
-
-    final RateLimiter rateLimiter;
+    private final RateLimiter rateLimiter;
+    private final UserRepository userRepository;
 
     @Autowired
     public RateController(
-            @Qualifier("leaky-bucket") RateLimiter rateLimiter
-    ) {
+            @Qualifier("sliding-window") RateLimiter rateLimiter,
+            UserRepository userRepository) {
         this.rateLimiter = rateLimiter;
+        this.userRepository = userRepository;
     }
 
-    @GetMapping("/hello")
-    public String hello(HttpServletRequest request) {
+    @GetMapping("/test")
+    public String testRate(HttpServletRequest request) {
+        return rateLimiter.isAllowed(getIpAddress(request)) ?
+                "success" : "fail";
+    }
+
+    @GetMapping("/test123")
+    public User testRedisRepository(
+            @RequestParam("username") String username,
+            HttpServletRequest request) {
+        System.out.println("halt");
+        return userRepository.save(new User(username == null ? "default" : username));
+    }
+
+    private String getIpAddress(HttpServletRequest request) {
         String ipAddress = request.getHeader("X-Forwarded-For");
         if (ipAddress == null) {
             ipAddress = request.getRemoteAddr();
@@ -30,7 +46,7 @@ public class RateController{
         if ("0:0:0:0:0:0:0:1".equalsIgnoreCase(ipAddress)) {
             ipAddress = "0000";
         }
-        return rateLimiter.isAllowed(ipAddress) ? "success" : "fail";
+        return ipAddress;
     }
 }
 

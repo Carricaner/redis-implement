@@ -3,7 +3,11 @@ package org.example.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.Jedis;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+
 
 @Configuration
 public class RedisConfig {
@@ -18,7 +22,16 @@ public class RedisConfig {
     }
 
     @Bean
-    public Jedis redisClient() {
-        return new Jedis(redisHost,  redisPort);
+    public JedisConnectionFactory jedisConnectionFactory() {
+        // Redis config
+        RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration(redisHost, redisPort);
+        return new JedisConnectionFactory(redisConfig);
+    }
+
+    @Bean
+    public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<?, ?> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        return template;
     }
 }

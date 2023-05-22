@@ -9,44 +9,42 @@ import redis.clients.jedis.Jedis;
 import java.time.Instant;
 
 @Component
-@Qualifier("slidingWindow")
+@Qualifier("sliding-window")
 public class SlidingWindowRateLimiter implements RateLimiter {
-
-    private static final String KEY_NAME = "rate";
+    private static final String KEY_PREFIX = "rate:";
     private final int limit;
     private final int windowDuration;
-    private final Jedis jedis;
+    private final Jedis jedis = new Jedis("localhost", 6380); // temp
 
     @Autowired
     public SlidingWindowRateLimiter(
             @Value("${server.rateLimiter.properties.limitCapacity:10}") int limit,
-            @Value("${server.rateLimiter.properties.windowDuration:60}") int windowDuration,
-            Jedis jedis) {
+            @Value("${server.rateLimiter.properties.windowDuration:60}") int windowDuration) {
         this.limit = limit;
         this.windowDuration = windowDuration;
-        this.jedis = jedis;
+    }
+
+    private String getKey(String clientId) {
+        return KEY_PREFIX + clientId;
     }
 
     @Override
     public boolean isAllowed(String clientId) {
         boolean result = false;
         long currentTime = Instant.now().getEpochSecond();
-        long windowStart = currentTime - windowDuration;
-        long count = getCount(clientId);
-        removeRecordByScore(clientId, windowStart);
-        if (count < limit) {
-            jedis.zadd(clientId, currentTime, String.valueOf(currentTime));
-            jedis.expire(clientId, windowDuration);
+        if (!exceedLimit(getKey(clientId), currentTime)) {
+            updateRecord(clientId, currentTime);
             result = true;
         }
         return result;
     }
 
-    private void removeRecordByScore(String clientId, long windowStart) {
-        jedis.zremrangeByScore(clientId, 0, windowStart);
+    private boolean exceedLimit(String clientId, long currentTime) {
+        long number = jedis.zcount(getKey(clientId), (double) currentTime - windowDuration, (double) currentTime);
+        return number >= limit;
     }
 
-    private long getCount(String clientId) {
-        return jedis.zcard(clientId);
+    private void updateRecord(String clientId, long currentTime) {
+        jedis.zadd(getKey(clientId), currentTime, String.valueOf(currentTime));
     }
 }

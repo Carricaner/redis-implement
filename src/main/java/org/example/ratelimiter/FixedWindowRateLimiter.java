@@ -1,6 +1,7 @@
 package org.example.ratelimiter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -9,20 +10,19 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 @Component
+@Qualifier("fixed-window")
 public class FixedWindowRateLimiter implements RateLimiter{
     private static final String KEY_NAME = "rate";
     private final int limit;
     private final int windowDuration;
-    private final Jedis jedis;
+    private final Jedis jedis = new Jedis("localhost", 6380); // temp
 
     @Autowired
     public FixedWindowRateLimiter(
             @Value("${server.rateLimiter.properties.limitCapacity:10}") int limit,
-            @Value("${server.rateLimiter.properties.windowDuration:60}") int windowDuration,
-            Jedis jedis) {
+            @Value("${server.rateLimiter.properties.windowDuration:60}") int windowDuration) {
         this.limit = limit;
         this.windowDuration = windowDuration;
-        this.jedis = jedis;
     }
 
     @Override

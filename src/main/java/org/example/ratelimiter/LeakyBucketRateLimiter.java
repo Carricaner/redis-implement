@@ -18,17 +18,15 @@ public class LeakyBucketRateLimiter implements RateLimiter {
     private static final String FIELD_NAME_LAST_LEAKING_TIME = "lastLeakingTime";
     private final int capacity;
     private final int leakingRate;
-    private final Jedis jedis;
+    private final Jedis jedis = new Jedis("localhost", 6380); // temp
     private static final int TOKEN_NUMBER_TO_BE_ADDED = 1;
 
     @Autowired
     public LeakyBucketRateLimiter(
             @Value("${server.rateLimiter.properties.limitCapacity:10}") int capacity,
-            @Value("${server.rateLimiter.properties.refillRate:10}") int leakingRate,
-            Jedis jedis) {
+            @Value("${server.rateLimiter.properties.refillRate:10}") int leakingRate) {
         this.capacity = capacity;
         this.leakingRate = leakingRate;
-        this.jedis = jedis;
     }
 
     private String getKey(String clientId) {
