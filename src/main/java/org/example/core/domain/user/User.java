@@ -1,15 +1,9 @@
-package org.example.controller;
+package org.example.core.domain.user;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
-
-@RedisHash("User")
 public class User {
-    @Id
     private String id;
     private String name;
 
-    // Constructors, getters, and setters
     public User(String name) {
         this.name = name;
     }

@@ -1,27 +1,24 @@
-package org.example.controller;
+package org.example.entrypoint.rest.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.example.ratelimiter.RateLimiter;
-import org.example.repository.redis.UserRepository;
+import org.example.core.domain.ratelimiter.RateLimiter;
+import org.example.core.usecase.user.UserUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rate")
 public class RateController{
     private final RateLimiter rateLimiter;
-    private final UserRepository userRepository;
+    private final UserUsecase userUsecase;
 
     @Autowired
     public RateController(
-            @Qualifier("sliding-window") RateLimiter rateLimiter,
-            UserRepository userRepository) {
+            @Qualifier("sliding-window") RateLimiter rateLimiter, UserUsecase userUsecase) {
         this.rateLimiter = rateLimiter;
-        this.userRepository = userRepository;
+        this.userUsecase = userUsecase;
     }
 
     @GetMapping("/test")
@@ -31,11 +28,11 @@ public class RateController{
     }
 
     @GetMapping("/test123")
-    public User testRedisRepository(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void testRedisRepository(
             @RequestParam("username") String username,
             HttpServletRequest request) {
-        System.out.println("halt");
-        return userRepository.save(new User(username == null ? "default" : username));
+        userUsecase.createRole();
     }
 
     private String getIpAddress(HttpServletRequest request) {

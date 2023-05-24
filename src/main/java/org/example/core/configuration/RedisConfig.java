@@ -1,4 +1,4 @@
-package org.example.configuration;
+package org.example.core.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,9 +7,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 
 @Configuration
+@EnableRedisRepositories(basePackages = "org.example.adapter.datasource.redis.repository")
 public class RedisConfig {
     private final String redisHost;
     private final int redisPort;

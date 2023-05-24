@@ -1,4 +1,4 @@
-package org.example.ratelimiter;
+package org.example.core.domain.ratelimiter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
