@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisHash;
 import java.util.HashSet;
 import java.util.Set;
 
-@RedisHash("User")
+@RedisHash("users")
 public class UserModel {
     @Id
     private String id;
@@ -44,5 +44,9 @@ public class UserModel {
 
     public void setRoles(Set<RoleModel> roles) {
         this.roles = roles;
+    }
+
+    public void addRole(RoleModel role) {
+        roles.add(role);
     }
 }

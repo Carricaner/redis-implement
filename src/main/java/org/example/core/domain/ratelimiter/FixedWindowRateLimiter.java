@@ -1,51 +1,54 @@
 package org.example.core.domain.ratelimiter;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.example.core.domain.ratelimiter.port.FixedBucketRateLimiterAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 @Component
-@Qualifier("fixed-window")
-public class FixedWindowRateLimiter implements RateLimiter{
-    private static final String KEY_NAME = "rate";
-    private final int limit;
-    private final int windowDuration;
-    private final Jedis jedis = new Jedis("localhost", 6380); // temp
+public class FixedWindowRateLimiter extends WindowRateLimiter {
+    private final FixedBucketRateLimiterAdapter adapter;
 
-    @Autowired
     public FixedWindowRateLimiter(
-            @Value("${server.rateLimiter.properties.limitCapacity:10}") int limit,
-            @Value("${server.rateLimiter.properties.windowDuration:60}") int windowDuration) {
-        this.limit = limit;
-        this.windowDuration = windowDuration;
+            @Value("${server.rateLimiter.properties.limitCapacity:10}") long windowSize,
+            @Value("${server.rateLimiter.properties.windowDuration:60}") long windowDuration,
+            FixedBucketRateLimiterAdapter adapter) {
+        super(windowSize, windowDuration);
+        this.adapter = adapter;
     }
 
     @Override
     public boolean isAllowed(String clientId) {
         boolean result = false;
-        int count = getCount(clientId);
-        if (count < limit) {
-            jedis.hincrBy(KEY_NAME, clientId, 1);
-            long timeLeft = getLeftTime();
-            jedis.expire(KEY_NAME, timeLeft);
+        Instant now = Instant.now();
+        String key = getKeyName(clientId);
+        long count = countWithinCurrentMinute(key, now);
+        if (count < windowSize) {
+            addOneRecord(key, now);
             result = true;
         }
         return result;
     }
 
-    private int getCount(String clientId) {
-        return jedis.hget(KEY_NAME, clientId) == null ?
-                0 : Integer.parseInt(jedis.hget(KEY_NAME, clientId));
+    @Override
+    public void reset() {
+        // TODO
     }
 
-    private long getLeftTime() {
-    	return windowDuration - Instant.now().getEpochSecond()
-                + Instant.now().truncatedTo(ChronoUnit.MINUTES).getEpochSecond();
+    private String getKeyName(String clientId) {
+        return WindowRateLimiter.KEY_PREFIX + clientId;
+    }
+
+    private long countWithinCurrentMinute(String key, Instant now) {
+        return adapter.countBetween(key,
+                now.truncatedTo(ChronoUnit.MINUTES).getEpochSecond(),
+                now.plus(1, ChronoUnit.MINUTES).truncatedTo(ChronoUnit.MINUTES).getEpochSecond());
+    }
+
+    private void addOneRecord(String key, Instant now) {
+        adapter.plusOneVisit(key, now);
     }
 }
 

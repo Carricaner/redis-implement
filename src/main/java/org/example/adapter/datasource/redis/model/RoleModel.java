@@ -2,7 +2,7 @@ package org.example.adapter.datasource.redis.model;
 
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash
+@RedisHash("roles")
 public class RoleModel {
     private String id;
     private String name;
