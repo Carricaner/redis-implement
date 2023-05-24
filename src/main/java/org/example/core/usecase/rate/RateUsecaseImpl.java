@@ -15,4 +15,9 @@ public class RateUsecaseImpl implements RateUsecase {
     public boolean isAllowed(String clientId) {
         return windowRateLimiter.isAllowed(clientId);
     }
+
+    @Override
+    public void flushAllRecord(String clientId) {
+        windowRateLimiter.reset(clientId);
+    }
 }

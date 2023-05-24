@@ -1,7 +1,7 @@
 package org.example.core.domain.ratelimiter;
 
 public abstract class WindowRateLimiter implements RateLimiter {
-    public static final String KEY_PREFIX = "window-rate";
+    public static final String KEY_PREFIX = "window-rate-";
     protected final long windowSize;
     protected final long windowDuration;
 
@@ -15,5 +15,5 @@ public abstract class WindowRateLimiter implements RateLimiter {
         return false;
     }
 
-    public abstract void reset();
+    public abstract void reset(String clientId);
 }

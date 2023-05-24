@@ -33,8 +33,8 @@ public class FixedWindowRateLimiter extends WindowRateLimiter {
     }
 
     @Override
-    public void reset() {
-        // TODO
+    public void reset(String clientId) {
+        adapter.resetAllRecords(getKeyName(clientId));
     }
 
     private String getKeyName(String clientId) {

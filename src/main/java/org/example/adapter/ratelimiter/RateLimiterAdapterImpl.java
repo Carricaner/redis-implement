@@ -25,4 +25,9 @@ public class RateLimiterAdapterImpl implements FixedBucketRateLimiterAdapter {
     public void plusOneVisit(String key, Instant current) {
         redisTemplate.opsForZSet().add(key, current.toString(), current.getEpochSecond());
     }
+
+    @Override
+    public void resetAllRecords(String key) {
+        redisTemplate.delete(key);
+    }
 }

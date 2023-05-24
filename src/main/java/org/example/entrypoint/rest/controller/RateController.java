@@ -1,13 +1,10 @@
 package org.example.entrypoint.rest.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.example.core.domain.ratelimiter.RateLimiter;
 import org.example.core.usecase.rate.RateUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rate")
@@ -22,6 +19,12 @@ public class RateController{
     @GetMapping("/test")
     public String testRate(HttpServletRequest request) {
         return rateUsecase.isAllowed(getIpAddress(request)) ? "OK" : "NOT OK";
+    }
+
+    @PostMapping("/flush")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void flush(HttpServletRequest request) {
+        rateUsecase.flushAllRecord(getIpAddress(request));
     }
 
     private String getIpAddress(HttpServletRequest request) {
