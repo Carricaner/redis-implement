@@ -52,6 +52,11 @@ public class TokenBucketRateLimiter extends BucketRateLimiter {
         return false;
     }
 
+    @Override
+    public void reset(String clientId) {
+        bucketRateLimiterAdapter.resetAllRecords(getKey(clientId));
+    }
+
     private long calculateTokens(TokenBucket bucket, Instant currentTime) {
         long tokensToBeAdded = needRefill(currentTime.getEpochSecond(), bucket.updateTime()) ? rate : 0;
         return Math.min(capacity, bucket.tokensNumber() + tokensToBeAdded) - TOKEN_NUMBER_TO_BE_CONSUMED;
