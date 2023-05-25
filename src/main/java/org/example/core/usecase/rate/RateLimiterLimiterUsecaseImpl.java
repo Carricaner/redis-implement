@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RateUsecaseImpl implements RateUsecase {
+public class RateLimiterLimiterUsecaseImpl implements RateLimiterUsecase {
     private final WindowRateLimiter windowRateLimiter;
     private final BucketRateLimiter bucketRateLimiter;
 
-    public RateUsecaseImpl(
+    public RateLimiterLimiterUsecaseImpl(
             @Qualifier("sliding-window") WindowRateLimiter windowRateLimiter,
             @Qualifier("leaky-bucket") BucketRateLimiter bucketRateLimiter) {
         this.windowRateLimiter = windowRateLimiter;

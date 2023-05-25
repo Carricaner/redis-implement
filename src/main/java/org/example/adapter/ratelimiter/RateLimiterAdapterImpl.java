@@ -1,6 +1,6 @@
 package org.example.adapter.ratelimiter;
 
-import org.example.core.domain.ratelimiter.TokenBucket;
+import org.example.core.domain.ratelimiter.component.TokenBucket;
 import org.example.core.domain.ratelimiter.port.BucketRateLimiterAdapter;
 import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
 import org.springframework.beans.factory.annotation.Autowired;

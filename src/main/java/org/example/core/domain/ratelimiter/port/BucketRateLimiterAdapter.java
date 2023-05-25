@@ -1,6 +1,6 @@
 package org.example.core.domain.ratelimiter.port;
 
-import org.example.core.domain.ratelimiter.TokenBucket;
+import org.example.core.domain.ratelimiter.component.TokenBucket;
 
 import java.time.Instant;
 import java.util.Optional;

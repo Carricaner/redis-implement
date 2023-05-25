@@ -1,5 +1,6 @@
 package org.example.core.domain.ratelimiter;
 
+import org.example.core.domain.ratelimiter.component.TokenBucket;
 import org.example.core.domain.ratelimiter.port.BucketRateLimiterAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,8 +18,8 @@ public class TokenBucketRateLimiter extends BucketRateLimiter {
 
     @Autowired
     public TokenBucketRateLimiter(
-            @Value("${server.rateLimiter.properties.limitCapacity:10}") long capacity,
-            @Value("${server.rateLimiter.properties.refillRate:10}") long rate,
+            @Value("10") long capacity,
+            @Value("10") long rate,
             BucketRateLimiterAdapter bucketRateLimiterAdapter) {
         super(capacity, rate);
         this.bucketRateLimiterAdapter = bucketRateLimiterAdapter;

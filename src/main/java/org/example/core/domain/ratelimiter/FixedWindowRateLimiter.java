@@ -12,8 +12,8 @@ public class FixedWindowRateLimiter extends WindowRateLimiter {
     private final WindowRateLimiterAdapter adapter;
 
     public FixedWindowRateLimiter(
-            @Value("${server.rateLimiter.properties.limitCapacity:10}") long windowSize,
-            @Value("${server.rateLimiter.properties.windowDuration:60}") long windowDuration,
+            @Value("10") long windowSize,
+            @Value("60") long windowDuration,
             WindowRateLimiterAdapter adapter) {
         super(windowSize, windowDuration);
         this.adapter = adapter;
