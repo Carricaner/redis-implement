@@ -1,6 +1,6 @@
 package org.example.core.domain.ratelimiter;
 
-import org.example.core.domain.ratelimiter.port.FixedBucketRateLimiterAdapter;
+import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -9,12 +9,12 @@ import java.time.temporal.ChronoUnit;
 
 @Component
 public class FixedWindowRateLimiter extends WindowRateLimiter {
-    private final FixedBucketRateLimiterAdapter adapter;
+    private final WindowRateLimiterAdapter adapter;
 
     public FixedWindowRateLimiter(
             @Value("${server.rateLimiter.properties.limitCapacity:10}") long windowSize,
             @Value("${server.rateLimiter.properties.windowDuration:60}") long windowDuration,
-            FixedBucketRateLimiterAdapter adapter) {
+            WindowRateLimiterAdapter adapter) {
         super(windowSize, windowDuration);
         this.adapter = adapter;
     }
@@ -47,8 +47,8 @@ public class FixedWindowRateLimiter extends WindowRateLimiter {
                 now.plus(1, ChronoUnit.MINUTES).truncatedTo(ChronoUnit.MINUTES).getEpochSecond());
     }
 
-    private void addOneRecord(String key, Instant now) {
-        adapter.plusOneVisit(key, now);
+    private void addOneRecord(String key, Instant currentTime) {
+        adapter.plusOneVisit(key, currentTime);
     }
 }
 
