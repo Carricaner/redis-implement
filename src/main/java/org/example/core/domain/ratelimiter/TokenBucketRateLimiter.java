@@ -13,7 +13,7 @@ import java.util.Optional;
 @Qualifier("token-bucket")
 public class TokenBucketRateLimiter extends BucketRateLimiter {
     private final BucketRateLimiterAdapter bucketRateLimiterAdapter;
-    private boolean initialized;
+    private boolean initialized = false;
 
     @Autowired
     public TokenBucketRateLimiter(
@@ -21,7 +21,6 @@ public class TokenBucketRateLimiter extends BucketRateLimiter {
             @Value("${server.rateLimiter.properties.refillRate:10}") long rate,
             BucketRateLimiterAdapter bucketRateLimiterAdapter) {
         super(capacity, rate);
-        this.initialized = false;
         this.bucketRateLimiterAdapter = bucketRateLimiterAdapter;
     }
 
@@ -29,16 +28,17 @@ public class TokenBucketRateLimiter extends BucketRateLimiter {
         return KEY_PREFIX + clientId;
     }
 
-    void initialized(String key) {
+    void initialize(String key) {
         if (!initialized) {
             bucketRateLimiterAdapter.initializeBucket(key, capacity, Instant.now());
+            initialized = true;
         }
     }
 
     @Override
     public boolean isAllowed(String clientId) {
         String key = getKey(clientId);
-        initialized(key);
+        initialize(key);
         Optional<TokenBucket> op = bucketRateLimiterAdapter.findBucketBucket(key);
         if (op.isEmpty()) {
             return false;

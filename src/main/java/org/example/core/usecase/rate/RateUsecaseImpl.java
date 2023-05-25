@@ -12,7 +12,7 @@ public class RateUsecaseImpl implements RateUsecase {
 
     public RateUsecaseImpl(
             @Qualifier("sliding-window") WindowRateLimiter windowRateLimiter,
-            @Qualifier("token-bucket") BucketRateLimiter bucketRateLimiter) {
+            @Qualifier("leaky-bucket") BucketRateLimiter bucketRateLimiter) {
         this.windowRateLimiter = windowRateLimiter;
         this.bucketRateLimiter = bucketRateLimiter;
     }
