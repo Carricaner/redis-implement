@@ -34,7 +34,17 @@ public class RateLimiterClient {
             case RateLimiterPropertiesConfig.TYPE_FIXED_WINDOW ->
                     new FixedWindowRateLimiter(
                             config.getLimitCapacity(), config.getWindowDuration(), windowRateLimiterAdapter);
+            case RateLimiterPropertiesConfig.TYPE_TOKEN_BUCKET ->
+                    new TokenBucketRateLimiter(
+                            config.getLimitCapacity(), config.getRefillRate(), bucketRateLimiterAdapter);
+            case RateLimiterPropertiesConfig.TYPE_LEAKY_BUCKET ->
+                    new LeakyBucketRateLimiter(
+                            config.getLimitCapacity(), config.getLeakingRate(), bucketRateLimiterAdapter);
             default -> throw new RuntimeException("Unrecognized rate limiter type: " + config.getType());
         };
+    }
+
+    public RateLimiter getRateLimiter() {
+        return rateLimiter;
     }
 }

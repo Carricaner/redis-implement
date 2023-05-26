@@ -15,5 +15,5 @@ public abstract class WindowRateLimiter implements RateLimiter {
         return false;
     }
 
-    public void reset(String clientId) {}
+    public void refreshAll(String clientId) {}
 }

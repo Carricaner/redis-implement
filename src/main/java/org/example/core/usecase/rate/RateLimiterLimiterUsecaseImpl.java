@@ -1,25 +1,27 @@
 package org.example.core.usecase.rate;
 
-import org.example.core.domain.ratelimiter.BucketRateLimiter;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.example.core.domain.ratelimiter.RateLimiterClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RateLimiterLimiterUsecaseImpl implements RateLimiterUsecase {
-    private final BucketRateLimiter bucketRateLimiter;
+    private final RateLimiterClient rateLimiterClient;
 
-    public RateLimiterLimiterUsecaseImpl(
-            @Qualifier("leaky-bucket") BucketRateLimiter bucketRateLimiter) {
-        this.bucketRateLimiter = bucketRateLimiter;
+
+    @Autowired
+    public RateLimiterLimiterUsecaseImpl(RateLimiterClient rateLimiterClient) {
+        this.rateLimiterClient = rateLimiterClient;
     }
+
 
     @Override
     public boolean isAllowed(String clientId) {
-        return bucketRateLimiter.isAllowed(clientId);
+        return rateLimiterClient.getRateLimiter().isAllowed(clientId);
     }
 
     @Override
     public void flushAllRecord(String clientId) {
-        bucketRateLimiter.reset(clientId);
+        rateLimiterClient.getRateLimiter().refreshAll(clientId);
     }
 }

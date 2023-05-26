@@ -17,5 +17,6 @@ public abstract class BucketRateLimiter implements RateLimiter {
         return false;
     }
 
-    public void reset(String clientId) {}
+    @Override
+    public void refreshAll(String clientId) {}
 }

@@ -2,25 +2,15 @@ package org.example.core.domain.ratelimiter;
 
 import org.example.core.domain.ratelimiter.component.TokenBucket;
 import org.example.core.domain.ratelimiter.port.BucketRateLimiterAdapter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Optional;
 
-@Component
-@Qualifier("leaky-bucket")
 public class LeakyBucketRateLimiter extends BucketRateLimiter {
     private final BucketRateLimiterAdapter bucketRateLimiterAdapter;
     private boolean initialized = false;
 
-    @Autowired
-    public LeakyBucketRateLimiter(
-            @Value("10") long capacity,
-            @Value("10") long rate,
-            BucketRateLimiterAdapter bucketRateLimiterAdapter) {
+    public LeakyBucketRateLimiter(long capacity, long rate, BucketRateLimiterAdapter bucketRateLimiterAdapter) {
         super(capacity, rate);
         this.bucketRateLimiterAdapter = bucketRateLimiterAdapter;
     }
@@ -54,7 +44,7 @@ public class LeakyBucketRateLimiter extends BucketRateLimiter {
     }
 
     @Override
-    public void reset(String clientId) {
+    public void refreshAll(String clientId) {
         bucketRateLimiterAdapter.resetAllRecords(getKey(clientId));
     }
 
