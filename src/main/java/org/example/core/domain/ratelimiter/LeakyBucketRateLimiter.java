@@ -27,7 +27,7 @@ public class LeakyBucketRateLimiter extends BucketRateLimiter {
     }
 
     @Override
-    public boolean isAllowed(String clientId) {
+    public boolean isAllowed(String clientId, Instant time) {
         String key = getKey(clientId);
         initialize(key);
         Optional<TokenBucket> op = bucketRateLimiterAdapter.findBucketBucket(key);
@@ -35,9 +35,8 @@ public class LeakyBucketRateLimiter extends BucketRateLimiter {
             return false;
         }
         TokenBucket bucket = op.get();
-        Instant currentTime = Instant.now();
-        if (calculateTokens(bucket, currentTime) <= capacity) {
-            updateTokenInfo(key, bucket, currentTime);
+        if (calculateTokens(bucket, time) <= capacity) {
+            updateTokenInfo(key, bucket, time);
             return true;
         }
         return false;

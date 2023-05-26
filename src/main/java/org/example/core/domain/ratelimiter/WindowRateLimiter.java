@@ -1,5 +1,7 @@
 package org.example.core.domain.ratelimiter;
 
+import java.time.Instant;
+
 public abstract class WindowRateLimiter implements RateLimiter {
     public static final String KEY_PREFIX = "window-rate-";
     protected final long windowSize;
@@ -11,7 +13,7 @@ public abstract class WindowRateLimiter implements RateLimiter {
     }
 
     @Override
-    public boolean isAllowed(String clientId) {
+    public boolean isAllowed(String clientId, Instant time) {
         return false;
     }
 

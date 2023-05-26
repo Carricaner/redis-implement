@@ -1,5 +1,7 @@
 package org.example.core.domain.ratelimiter;
 
+import java.time.Instant;
+
 public abstract class BucketRateLimiter implements RateLimiter {
     public static final String KEY_PREFIX = "bucket-rate-";
     protected static final long TOKEN_NUMBER_TO_BE_CONSUMED = 1L;
@@ -13,7 +15,7 @@ public abstract class BucketRateLimiter implements RateLimiter {
     }
 
     @Override
-    public boolean isAllowed(String clientId) {
+    public boolean isAllowed(String clientId, Instant time) {
         return false;
     }
 

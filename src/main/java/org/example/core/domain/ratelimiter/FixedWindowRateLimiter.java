@@ -14,13 +14,12 @@ public class FixedWindowRateLimiter extends WindowRateLimiter {
     }
 
     @Override
-    public boolean isAllowed(String clientId) {
+    public boolean isAllowed(String clientId, Instant time) {
         boolean result = false;
-        Instant now = Instant.now();
         String key = getKeyName(clientId);
-        long count = countWithinCurrentMinute(key, now);
+        long count = countWithinCurrentMinute(key, time);
         if (count < windowSize) {
-            addOneRecord(key, now);
+            addOneRecord(key, time);
             result = true;
         }
         return result;

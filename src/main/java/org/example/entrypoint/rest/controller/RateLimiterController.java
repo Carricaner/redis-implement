@@ -3,7 +3,6 @@ package org.example.entrypoint.rest.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.core.usecase.ratelimiter.RateLimiterUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,7 +21,6 @@ public class RateLimiterController {
     }
 
     @PostMapping("/flush")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String flush(HttpServletRequest request) {
         rateLimiterUsecase.flushAllRecord(getIpAddress(request));
         return "Flushed!";
