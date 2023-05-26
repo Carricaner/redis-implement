@@ -11,7 +11,7 @@ server:
       # `fixed-window` requires limitCapacity & window-duration
       # `token-bucket` requires limitCapacity & refillRate
       # `leaky-bucket` requires limitCapacity & leakingRate
-      type: sliding-window
+      type: token-bucket
       limitCapacity: 10
       windowDuration: 60 # in seconds
       refillRate: 10 # pieces/min
