@@ -1,6 +1,6 @@
 package org.example.core.domain.ratelimiter;
 
-import org.example.core.configuration.RateLimiterPropertiesConfig;
+import org.example.core.configuration.redis.RateLimiterPropertiesConfig;
 import org.example.core.domain.ratelimiter.port.BucketRateLimiterAdapter;
 import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
 import org.springframework.beans.factory.annotation.Autowired;

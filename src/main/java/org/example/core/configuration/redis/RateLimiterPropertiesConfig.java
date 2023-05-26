@@ -1,4 +1,4 @@
-package org.example.core.configuration;
+package org.example.core.configuration.redis;
 
 import org.example.core.utils.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
