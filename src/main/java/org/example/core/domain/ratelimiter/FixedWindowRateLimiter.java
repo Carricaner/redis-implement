@@ -1,20 +1,14 @@
 package org.example.core.domain.ratelimiter;
 
 import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-@Component
 public class FixedWindowRateLimiter extends WindowRateLimiter {
     private final WindowRateLimiterAdapter adapter;
 
-    public FixedWindowRateLimiter(
-            @Value("10") long windowSize,
-            @Value("60") long windowDuration,
-            WindowRateLimiterAdapter adapter) {
+    public FixedWindowRateLimiter(long windowSize, long windowDuration, WindowRateLimiterAdapter adapter) {
         super(windowSize, windowDuration);
         this.adapter = adapter;
     }
