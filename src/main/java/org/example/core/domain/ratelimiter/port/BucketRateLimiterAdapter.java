@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface BucketRateLimiterAdapter {
     void initializeBucket(String key, long capacity, Instant time);
 
-    Optional<TokenBucket> findBucketBucket(String key);
+    Optional<TokenBucket> findTokenBucket(String key);
 
     void updateBucketInfo(String key, TokenBucket updatedBucket);
 

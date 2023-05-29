@@ -51,7 +51,7 @@ public class RateLimiterAdapterImpl implements WindowRateLimiterAdapter, BucketR
     }
 
     @Override
-    public Optional<TokenBucket> findBucketBucket(String key) {
+    public Optional<TokenBucket> findTokenBucket(String key) {
         List<Object> result = redisTemplate.opsForHash().multiGet(key, List.of(
                 getTokensFieldNameOfBucket(),
                 getUpdateTimeFieldNameOfBucket()

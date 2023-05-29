@@ -30,7 +30,7 @@ public class LeakyBucketRateLimiter extends BucketRateLimiter {
     public boolean isAllowed(String clientId, Instant time) {
         String key = getKey(clientId);
         initialize(key);
-        Optional<TokenBucket> op = bucketRateLimiterAdapter.findBucketBucket(key);
+        Optional<TokenBucket> op = bucketRateLimiterAdapter.findTokenBucket(key);
         if (op.isEmpty()) {
             return false;
         }
