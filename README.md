@@ -16,3 +16,5 @@ including rate limiters, bloom filters, distributed lock and so forth.
     consisting of core, adapter & entrypoint. 
     The three main parts are interacting with one another with interfaces.
   - The core is under the protection of the unit tests.
+
+## Steps
