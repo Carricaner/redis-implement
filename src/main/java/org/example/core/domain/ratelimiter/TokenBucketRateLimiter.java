@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public class TokenBucketRateLimiter extends BucketRateLimiter {
     private final BucketRateLimiterAdapter bucketRateLimiterAdapter;
-    private boolean initialized = false;
 
     public TokenBucketRateLimiter(long capacity, long rate, BucketRateLimiterAdapter bucketRateLimiterAdapter) {
         super(capacity, rate);
@@ -19,17 +18,14 @@ public class TokenBucketRateLimiter extends BucketRateLimiter {
         return KEY_PREFIX + clientId;
     }
 
-    void initialize(String key) {
-        if (!initialized) {
-            bucketRateLimiterAdapter.initializeBucket(key, capacity, Instant.now());
-            initialized = true;
-        }
+    void createIfAbsent(String key) {
+        bucketRateLimiterAdapter.initializeBucket(key, capacity, Instant.now());
     }
 
     @Override
     public boolean isAllowed(String clientId, Instant time) {
         String key = getKey(clientId);
-        initialize(key);
+        createIfAbsent(key);
         Optional<TokenBucket> op = bucketRateLimiterAdapter.findTokenBucket(key);
         if (op.isEmpty()) {
             return false;

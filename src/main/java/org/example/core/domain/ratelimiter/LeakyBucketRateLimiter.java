@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public class LeakyBucketRateLimiter extends BucketRateLimiter {
     private final BucketRateLimiterAdapter bucketRateLimiterAdapter;
-    private boolean initialized = false;
 
     public LeakyBucketRateLimiter(long capacity, long rate, BucketRateLimiterAdapter bucketRateLimiterAdapter) {
         super(capacity, rate);
@@ -19,17 +18,14 @@ public class LeakyBucketRateLimiter extends BucketRateLimiter {
         return KEY_PREFIX + clientId;
     }
 
-    void initialize(String key) {
-        if (!initialized) {
-            bucketRateLimiterAdapter.initializeBucket(key, 0L, Instant.now());
-            initialized = true;
-        }
+    void createIfAbsent(String key) {
+        bucketRateLimiterAdapter.initializeBucket(key, 0L, Instant.now());
     }
 
     @Override
     public boolean isAllowed(String clientId, Instant time) {
         String key = getKey(clientId);
-        initialize(key);
+        createIfAbsent(key);
         Optional<TokenBucket> op = bucketRateLimiterAdapter.findTokenBucket(key);
         if (op.isEmpty()) {
             return false;
