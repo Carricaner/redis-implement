@@ -2,13 +2,12 @@ package org.example.core.configuration.web.interceptors;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.Instant;
 import org.example.core.domain.ratelimiter.RateLimiterClient;
 import org.example.core.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import java.time.Instant;
 
 @Component
 public class RateLimitInterceptor implements HandlerInterceptor {
