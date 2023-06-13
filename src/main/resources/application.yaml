@@ -1,7 +1,8 @@
 spring:
   redis:
-    host: localhost
-    port: 6380
+    # Connect to another Docker container written in docker-compose.yaml
+    host: redis-service
+    port: 6379
 
 server:
   rate-limiter:

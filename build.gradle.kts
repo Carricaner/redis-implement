@@ -30,3 +30,19 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.register("writeProjectInfoToEnvFile") {
+    group = "deploy"
+    doLast {
+        val version = project.version.toString()
+        val projectName = project.name
+
+        val envFile = file(".env")
+        if (!envFile.exists()) {
+            envFile.createNewFile()
+            envFile.setExecutable(true)
+        }
+        envFile.appendText("PROJECT_NAME=$projectName")
+        envFile.appendText("\nVERSION=$version")
+    }
+}

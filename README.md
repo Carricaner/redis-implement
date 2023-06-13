@@ -6,6 +6,10 @@ Since well-known in-memory storage application, Redis, is widely used,
 the project is aiming at implementing some famous applications,
 including rate limiters, bloom filters, distributed lock and so forth.
 
+## Prerequisites
+
+- Docker (docker & docker compose)
+
 ## Features
 
 ### Rate limiter
@@ -26,3 +30,15 @@ including rate limiters, bloom filters, distributed lock and so forth.
 - The core is under the protection of the unit tests.
 
 ## Steps
+
+1. If there is no `.env` file under the root directory, run below:
+
+    ```shell
+      ./gradlew writeProjectInfoToEnvFile
+    ```
+
+2. Run below commands under the root directory
+
+    ```shell
+      ./gradlew build && docker-compose -d up 
+    ```
