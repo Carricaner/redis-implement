@@ -1,4 +1,4 @@
-package org.example.entrypoint.rest.controller;
+package org.example.entrypoint.rest.controller.ratelimiter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.core.usecase.ratelimiter.RateLimiterUsecase;
