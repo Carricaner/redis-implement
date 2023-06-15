@@ -17,3 +17,7 @@ server:
       windowDuration: 60 # in seconds
       refillRate: 10 # pieces/min
       leakingRate: 10 # pieces/min
+  bloom-filter:
+    properties:
+      expectedSize: 1000
+      falsePositiveRate: 0.001
