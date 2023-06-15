@@ -1,4 +1,6 @@
 spring:
+  banner:
+    location: classpath:banner/banner.txt
   redis:
     # Connect to another Docker container written in docker-compose.yaml
     host: redis-service
@@ -21,3 +23,4 @@ server:
     properties:
       expectedSize: 1000
       falsePositiveRate: 0.001
+
