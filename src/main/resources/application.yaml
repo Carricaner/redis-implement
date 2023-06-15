@@ -23,4 +23,3 @@ server:
     properties:
       expectedSize: 1000
       falsePositiveRate: 0.001
-

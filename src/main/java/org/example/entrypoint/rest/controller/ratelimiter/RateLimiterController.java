@@ -21,7 +21,7 @@ public class RateLimiterController {
         return "Test";
     }
 
-    @PostMapping("/flush")
+    @DeleteMapping("/")
     public String flush(HttpServletRequest request) {
         rateLimiterUsecase.flushAllRecord(WebUtils.getIpAddress(request));
         return "Flushed!";

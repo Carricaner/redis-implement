@@ -18,9 +18,23 @@ including rate limiters, bloom filters, distributed lock and so forth.
 - Under the hood, the former two were implemented by Redis' `sorted set`
   while the later two are implemented by Redis' `hash`.
 
+#### Test
+
+1. To test the rate limiter's function<br>
+   `GET http://localhost:8080/rate/test`
+2. To refresh the rate limiter's record<br>
+   `DELETE http://localhost:8080/rate`
+
 ### Bloom Filter
 
 - Used Redis' `BitMap` to implement it.
+
+#### Test
+
+1. To create an item in the bloom filter<br>
+   `POST http://localhost:8080/bloom-filter/{clientId}}`
+2. To check if the item exist in the bloom filter<br>
+   `GET http://localhost:8080/bloom-filter/{clientId}`
 
 ### Other
 
@@ -42,3 +56,4 @@ including rate limiters, bloom filters, distributed lock and so forth.
     ```shell
       ./gradlew build && docker-compose -d up 
     ```
+3. Use the provided APIs to test the application 
