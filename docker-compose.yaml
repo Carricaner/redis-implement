@@ -12,6 +12,6 @@ services:
     ports:
       - "8080:8080"
   redis-service:
-    image: redis:latest
+    image: redis/redis-stack-server:latest
     ports:
       - "6379:6379"
