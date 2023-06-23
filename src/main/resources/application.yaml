@@ -4,6 +4,8 @@ spring:
   redis:
     # Connect to another Docker container written in docker-compose.yaml
     host: redis-service
+    # for local test
+#    host: localhost
     port: 6379
 
 server:
