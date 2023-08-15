@@ -25,6 +25,7 @@ dependencies {
     val mapstructVersion = "1.5.2.Final"
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
     annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
+    implementation("org.redisson:redisson:3.23.2")
 }
 
 tasks.test {

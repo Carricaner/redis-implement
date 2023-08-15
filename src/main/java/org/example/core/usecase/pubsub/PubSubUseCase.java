@@ -1,14 +1,13 @@
 package org.example.core.usecase.pubsub;
 
-import org.example.core.domain.pubsub.RedisMessagePublisher;
-import org.example.core.domain.pubsub.RedisMessageSubscriber;
+import org.example.core.configuration.redis.pubsub.publishers.RedisMessagePublisher;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PubSubUseCase {
   private final RedisMessagePublisher redisMessagePublisher;
 
-  public PubSubUseCase(RedisMessagePublisher redisMessagePublisher, RedisMessageSubscriber redisMessageSubscriber) {
+  public PubSubUseCase(RedisMessagePublisher redisMessagePublisher) {
     this.redisMessagePublisher = redisMessagePublisher;
   }
 

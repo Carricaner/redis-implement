@@ -1,6 +1,6 @@
 package org.example.core.configuration.redis;
 
-import org.example.core.domain.pubsub.RedisMessageSubscriber;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,18 +44,17 @@ public class RedisConfig {
   }
 
   @Bean
-  public MessageListenerAdapter messageListenerAdapter(
-      RedisMessageSubscriber redisMessageSubscriber) {
-    return new MessageListenerAdapter(redisMessageSubscriber);
-  }
-
-  @Bean
   public RedisMessageListenerContainer redisMessageListenerContainer(
-      RedisConnectionFactory connectionFactory, MessageListenerAdapter messageListenerAdapter) {
+      RedisConnectionFactory connectionFactory,
+      Map<String, MessageListenerAdapter> messageListenerAdapterMap) {
     RedisMessageListenerContainer container = new RedisMessageListenerContainer();
     container.setConnectionFactory(connectionFactory);
-    container.addMessageListener(
-        messageListenerAdapter, new ChannelTopic("my-channel"));
+    if (!messageListenerAdapterMap.isEmpty()) {
+      messageListenerAdapterMap.forEach(
+          (key, value) -> {
+            container.addMessageListener(value, new ChannelTopic(key));
+          });
+    }
     return container;
   }
 }

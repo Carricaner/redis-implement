@@ -1,4 +1,4 @@
-package org.example.core.domain.pubsub;
+package org.example.core.configuration.redis.pubsub.subscribers;
 
 import java.nio.charset.StandardCharsets;
 import org.springframework.data.redis.connection.Message;
@@ -6,7 +6,7 @@ import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RedisMessageSubscriber implements MessageListener {
+public class MyTopicSubscriber implements MessageListener {
 
   @Override
   public void onMessage(Message message, byte[] pattern) {

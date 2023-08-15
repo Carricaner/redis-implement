@@ -1,4 +1,4 @@
-package org.example.core.domain.pubsub;
+package org.example.core.configuration.redis.pubsub.publishers;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
