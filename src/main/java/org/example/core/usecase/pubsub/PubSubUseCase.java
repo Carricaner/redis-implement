@@ -11,8 +11,7 @@ public class PubSubUseCase {
     this.redisMessagePublisher = redisMessagePublisher;
   }
 
-  public void trySend(String message) {
-    String channelTopic = "my-channel";
-    redisMessagePublisher.publishMessage(channelTopic, message);
+  public void trySend(String topic, String message) {
+    redisMessagePublisher.publishMessage(topic, message);
   }
 }

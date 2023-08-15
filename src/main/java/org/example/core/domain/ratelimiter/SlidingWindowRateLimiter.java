@@ -1,8 +1,7 @@
 package org.example.core.domain.ratelimiter;
 
-import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
-
 import java.time.Instant;
+import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
 
 public class SlidingWindowRateLimiter extends WindowRateLimiter {
 

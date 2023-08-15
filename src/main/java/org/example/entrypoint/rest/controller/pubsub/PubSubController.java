@@ -18,9 +18,11 @@ public class PubSubController {
     this.pubSubUseCase = pubSubUseCase;
   }
 
-  @PostMapping("/{message}")
+  @PostMapping("/{topic}/{message}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void clientExists(@PathVariable("message") String message, HttpServletRequest request) {
-    pubSubUseCase.trySend(message);
+  public void clientExists(
+      @PathVariable("topic") String topic,
+      @PathVariable("message") String message, HttpServletRequest request) {
+    pubSubUseCase.trySend(topic, message);
   }
 }

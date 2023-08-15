@@ -1,10 +1,9 @@
 package org.example.core.domain.ratelimiter;
 
-import org.example.core.domain.ratelimiter.component.TokenBucket;
-import org.example.core.domain.ratelimiter.port.BucketRateLimiterAdapter;
-
 import java.time.Instant;
 import java.util.Optional;
+import org.example.core.domain.ratelimiter.component.TokenBucket;
+import org.example.core.domain.ratelimiter.port.BucketRateLimiterAdapter;
 
 public class TokenBucketRateLimiter extends BucketRateLimiter {
     private final BucketRateLimiterAdapter bucketRateLimiterAdapter;

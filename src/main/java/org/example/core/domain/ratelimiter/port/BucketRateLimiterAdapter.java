@@ -1,9 +1,8 @@
 package org.example.core.domain.ratelimiter.port;
 
-import org.example.core.domain.ratelimiter.component.TokenBucket;
-
 import java.time.Instant;
 import java.util.Optional;
+import org.example.core.domain.ratelimiter.component.TokenBucket;
 
 public interface BucketRateLimiterAdapter {
     void initializeBucket(String key, long capacity, Instant time);

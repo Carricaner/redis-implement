@@ -1,17 +1,15 @@
 package org.example.core.domain.ratelimiter;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+import java.time.Instant;
 import org.assertj.core.api.Assertions;
 import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.Instant;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
 
 @ExtendWith(MockitoExtension.class)
 class SlidingWindowRateLimiterTest {

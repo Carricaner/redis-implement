@@ -1,9 +1,8 @@
 package org.example.core.domain.ratelimiter;
 
-import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
 
 public class FixedWindowRateLimiter extends WindowRateLimiter {
     private final WindowRateLimiterAdapter adapter;

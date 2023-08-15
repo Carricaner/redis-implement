@@ -12,8 +12,7 @@ public class RedisMessagePublisher {
     this.redisTemplate = redisTemplate;
   }
 
-  public void publishMessage(String channel, String message) {
-    ChannelTopic channelTopic = new ChannelTopic(channel);
-    redisTemplate.convertAndSend(channelTopic.getTopic(), message);
+  public void publishMessage(String topic, String message) {
+    redisTemplate.convertAndSend(new ChannelTopic(topic).getTopic(), message);
   }
 }

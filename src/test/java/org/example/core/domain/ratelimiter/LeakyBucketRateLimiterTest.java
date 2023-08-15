@@ -1,5 +1,10 @@
 package org.example.core.domain.ratelimiter;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.time.Instant;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.example.core.domain.ratelimiter.component.TokenBucket;
 import org.example.core.domain.ratelimiter.port.BucketRateLimiterAdapter;
@@ -7,12 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.Instant;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class LeakyBucketRateLimiterTest {

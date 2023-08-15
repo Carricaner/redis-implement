@@ -1,17 +1,16 @@
 package org.example.adapter.ratelimiter;
 
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import org.example.core.domain.ratelimiter.component.TokenBucket;
 import org.example.core.domain.ratelimiter.port.BucketRateLimiterAdapter;
 import org.example.core.domain.ratelimiter.port.WindowRateLimiterAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-
-import java.time.Instant;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 @Component
 public class RateLimiterAdapterImpl implements WindowRateLimiterAdapter, BucketRateLimiterAdapter {
