@@ -13,7 +13,11 @@ services:
       - "8080:8080"
     depends_on:
       - redis-service
-  redis-service:
+  redis-service1:
     image: redis/redis-stack-server:latest
     ports:
       - "6379:6379"
+  redis-service2:
+    image: redis/redis-stack-server:latest
+    ports:
+      - "6380:6379"
