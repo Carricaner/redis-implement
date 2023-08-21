@@ -9,19 +9,32 @@ including rate limiters, bloom filters, distributed lock and so forth.
 ## Prerequisites
 
 - Docker (docker & docker compose)
+- bash (Unix-like system)
 
 ## Steps
 
-1. If there is no `.env` file under the root directory, run below:
+1. clone the repo along with the submodule
 
-    ```shell
-      ./gradlew writeProjectInfoToEnvFile
+    ```
+      git clone --recursive git@github.com:Carricaner/redis-implement.git 
     ```
 
-2. Run below commands under the root directory
+2. If the submodule's folder `redis-cluster` is still empty, please run these commands below
 
-    ```shell
-      ./gradlew build && docker-compose -d up 
+    ```
+      git submodule init && git submodule update --remote
+    ```
+
+3. Start the application
+
+    ```
+      sh ./start.sh 
+    ```
+
+4. To shut down the application, run below
+
+    ```
+      sh ./shutdown.sh
     ```
 
 ## Features
@@ -46,12 +59,15 @@ including rate limiters, bloom filters, distributed lock and so forth.
     - To check if the item exist in the bloom filter<br>
       `GET http://localhost:8080/bloom-filter/{clientId}`
 
-### Other
 
-- The project is modeling <ins>clean architecture</ins>,
-  consisting of core, adapter & entrypoint.
-  The three main parts are interacting with one another with interfaces.
-- The core is under the protection of the unit tests.
+### Distributed Lock
+
+- Use `Redis Cluster` in containers & `Redisson` library to make it.
+- The incoming requests will be queued to derive the lock stored and distributed in Redis nodes.  
+- Tests:
+  - To get the resource under the lock of `myLock`
+    `GET http://localhost:8080/distributed-lock/my-lock`
+
 
 ### Pub/Sub
 
@@ -61,4 +77,17 @@ including rate limiters, bloom filters, distributed lock and so forth.
     - To send a message to a specific topic <br>
       `POST` `http://localhost:8080/pub-sub/{topic}/{message}` <br>
       Then, the message will be printed in the log of the server.
-  
+
+### Other
+
+- The project is modeling <ins>clean architecture</ins>,
+  consisting of core, adapter & entrypoint.
+  The three main parts are interacting with one another with interfaces.
+- `Redis Cluster` for distributed lock
+
+    - Running Docker containers
+      ![running services](./assets/running_docker_services.png)
+    - RedisInsight GUI
+      ![Redisinsight GUI](./assets/redisinsight.png)
+
+- The core is under the protection of the unit tests.

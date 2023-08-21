@@ -34,7 +34,6 @@ public class DistributedLockCase {
         lock.unlock();
       }
     }
-    String theResource = "the-resource";
-    return theResource;
+    return "the-resource";
   }
 }
