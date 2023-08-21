@@ -59,15 +59,13 @@ including rate limiters, bloom filters, distributed lock and so forth.
     - To check if the item exist in the bloom filter<br>
       `GET http://localhost:8080/bloom-filter/{clientId}`
 
-
 ### Distributed Lock
 
 - Use `Redis Cluster` in containers & `Redisson` library to make it.
-- The incoming requests will be queued to derive the lock stored and distributed in Redis nodes.  
+- The incoming requests will be queued to derive the lock stored and distributed in Redis nodes.
 - Tests:
-  - To get the resource under the lock of `myLock`
-    `GET http://localhost:8080/distributed-lock/my-lock`
-
+    - To get the resource under the lock of `myLock`
+      `GET http://localhost:8080/distributed-lock/my-lock`
 
 ### Pub/Sub
 
@@ -87,6 +85,9 @@ including rate limiters, bloom filters, distributed lock and so forth.
 
     - Running Docker containers
       ![running services](./assets/running_docker_services.png)
+- To use RedisInsight GUI
+    - Use `http://localhost:8001`
+    - Fill the blank with the information in `./redis-cluster/output.txt`
     - RedisInsight GUI
       ![Redisinsight GUI](./assets/redisinsight.png)
 
