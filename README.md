@@ -16,25 +16,25 @@ including rate limiters, bloom filters, distributed lock and so forth.
 1. clone the repo along with the submodule
 
     ```
-      git clone --recursive git@github.com:Carricaner/redis-implement.git 
+    git clone --recursive git@github.com:Carricaner/redis-implement.git 
     ```
 
 2. If the submodule's folder `redis-cluster` is still empty, please run these commands below
 
     ```
-      git submodule init && git submodule update --remote
+    git submodule init && git submodule update --remote
     ```
 
 3. Start the application
 
     ```
-      sh ./start.sh 
+    sh ./start.sh 
     ```
 
 4. To shut down the application, run below
 
     ```
-      sh ./shutdown.sh
+    sh ./shutdown.sh
     ```
 
 ## Features
