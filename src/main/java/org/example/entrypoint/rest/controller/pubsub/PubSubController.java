@@ -2,7 +2,6 @@ package org.example.entrypoint.rest.controller.pubsub;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.core.usecase.pubsub.PubSubUseCase;
-import org.redisson.api.RedissonClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PubSubController {
   private final PubSubUseCase pubSubUseCase;
 
-  private final RedissonClient redissonClient;
-
-  public PubSubController(PubSubUseCase pubSubUseCase, RedissonClient redissonClient) {
+  public PubSubController(PubSubUseCase pubSubUseCase) {
     this.pubSubUseCase = pubSubUseCase;
-    this.redissonClient = redissonClient;
   }
 
   @PostMapping("/{topic}/{message}")

@@ -3,9 +3,9 @@ spring:
     location: classpath:banner/banner.txt
   redis:
     # Connect to another Docker container written in docker-compose.yaml
-    #    host: redis-service1
+    host: redis-service
     # for local test
-    host: localhost
+    #    host: localhost
     port: 6379
     redisson:
       config: classpath:redisson-config.yaml
