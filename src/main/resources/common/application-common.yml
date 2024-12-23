@@ -1,0 +1,13 @@
+spring:
+  config:
+    import:
+      - "classpath:/common/rate-limiter.yml"
+      - "classpath:/common/bloom-filter.yml"
+  banner:
+    location: classpath:/banner/banner.txt
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
+server:
+  port: 8081
+  shutdown: graceful

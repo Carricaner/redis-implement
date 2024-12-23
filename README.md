@@ -92,3 +92,7 @@ including rate limiters, bloom filters, distributed lock and so forth.
       ![Redisinsight GUI](./assets/redisinsight.png)
 
 - The core is under the protection of the unit tests.
+
+## Others
+- For AWS Elastic Cache, we need to set up AWS Direct Connect & Transit Gateway because it cannot be connected publicly by default.
+  - However, it is accessible for the EC2 instances under the same VPC.

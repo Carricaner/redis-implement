@@ -1,7 +1,7 @@
-package org.example.core.configuration.redis;
+package org.example.core.configuration.redis.jedis;
 
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Value;
+import org.example.core.configuration.redis.RedisConfigProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -17,21 +17,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableRedisRepositories(basePackages = "org.example.adapter.datasource.redis.repository")
 public class RedisConfig {
-  private final String redisHost;
-  private final int redisPort;
-
-  public RedisConfig(
-      @Value("${spring.redis.host:localhost}") String redisHost,
-      @Value("${spring.redis.port:6379}") int redisPort) {
-    this.redisHost = redisHost;
-    this.redisPort = redisPort;
-  }
 
   @Bean
-  public JedisConnectionFactory jedisConnectionFactory() {
-    // Redis config
+  public JedisConnectionFactory jedisConnectionFactory(RedisConfigProperties properties) {
     RedisStandaloneConfiguration redisConfig =
-        new RedisStandaloneConfiguration(redisHost, redisPort);
+        new RedisStandaloneConfiguration(properties.getHost(), properties.getPort());
+    redisConfig.setUsername(properties.getUsername());
+    redisConfig.setPassword(properties.getPassword());
     return new JedisConnectionFactory(redisConfig);
   }
 
