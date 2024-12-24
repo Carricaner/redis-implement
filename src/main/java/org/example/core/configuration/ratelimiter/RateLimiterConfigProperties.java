@@ -9,12 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "rate-limiter")
 public class RateLimiterConfigProperties {
-  public static final String SLIDING_WINDOW_TYPE = "sliding-window";
-  public static final String FIXED_WINDOW_TYPE = "fixed-window";
-  public static final String TOKEN_BUCKET_TYPE = "token-bucket";
-  public static final String LEAKY_BUCKET_TYPE = "leaky-bucket";
-
-  private RateLimiterType type = RateLimiterType.SLIDING_WINDOW;
+  private RateLimiterType type;
   private Long limitCapacity = 10L;
   private Long windowDuration = 60L;
   private Long refillRate = 10L;

@@ -18,7 +18,7 @@ public class SlidingWindowRateLimiter extends WindowRateLimiter {
   }
 
   @Override
-  public boolean isAllowed(String clientId, Instant time) {
+  public boolean tryAcquire(String clientId, Instant time) {
     String key = getKeyName(clientId);
     if (!exceedLimit(key, time)) {
       addOneRecord(key, time);

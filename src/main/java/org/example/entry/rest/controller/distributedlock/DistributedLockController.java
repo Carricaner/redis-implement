@@ -1,11 +1,13 @@
 package org.example.entry.rest.controller.distributedlock;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.example.core.domain.ratelimiter.RateLimited;
 import org.example.core.usecase.distributedlock.DistributedLockUseCase;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RateLimited
 @RestController
 @RequestMapping("/distributed-lock")
 public class DistributedLockController {

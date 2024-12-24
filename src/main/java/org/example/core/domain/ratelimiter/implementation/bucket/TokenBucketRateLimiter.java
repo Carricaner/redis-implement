@@ -35,7 +35,7 @@ public class TokenBucketRateLimiter extends BucketRateLimiter {
   }
 
   @Override
-  public boolean isAllowed(String clientId, Instant time) {
+  public boolean tryAcquire(String clientId, Instant time) {
     String key = getKey(clientId);
     createIfAbsent(key);
 

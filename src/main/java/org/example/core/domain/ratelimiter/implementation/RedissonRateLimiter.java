@@ -13,7 +13,7 @@ public class RedissonRateLimiter {
 
   public RedissonRateLimiter(RedissonClient redissonClient) {
     this.redissonClient = redissonClient;
-    RRateLimiter limiter = redissonClient.getRateLimiter("myLimiter");
-    limiter.trySetRate(RateType.OVERALL, 5, 2, RateIntervalUnit.SECONDS);
+//    RRateLimiter limiter = redissonClient.getRateLimiter("myLimiter");
+//    limiter.trySetRate(RateType.OVERALL, 5, 2, RateIntervalUnit.SECONDS);
   }
 }

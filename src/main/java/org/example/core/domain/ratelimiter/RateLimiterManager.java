@@ -1,5 +1,6 @@
 package org.example.core.domain.ratelimiter;
 
+import java.time.Instant;
 import org.example.core.configuration.ratelimiter.RateLimiterConfigProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ public class RateLimiterManager {
     this.rateLimiter = rateLimiterFactory.generateRateLimiter(properties.getType());
   }
 
-  public RateLimiter getRateLimiter() {
-    return rateLimiter;
+  public boolean tryAcquire(String key, Instant instant) {
+    return rateLimiter.tryAcquire(key, instant);
   }
 }

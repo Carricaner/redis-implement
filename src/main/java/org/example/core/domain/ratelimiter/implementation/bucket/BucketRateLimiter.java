@@ -16,7 +16,7 @@ public abstract class BucketRateLimiter implements RateLimiter {
     }
 
     @Override
-    public boolean isAllowed(String clientId, Instant time) {
+    public boolean tryAcquire(String clientId, Instant time) {
         return false;
     }
 

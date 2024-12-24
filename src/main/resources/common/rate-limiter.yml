@@ -1,12 +1,11 @@
 rate-limiter:
-  properties:
-    # type options includes: `sliding-window`, `fixed-window`, `token-bucket`, `leaky-bucket`
-    # `sliding-window` requires limitCapacity & window-duration
-    # `fixed-window` requires limitCapacity & window-duration
-    # `token-bucket` requires limitCapacity & refillRate
-    # `leaky-bucket` requires limitCapacity & leakingRate
-    type: token-bucket
-    limitCapacity: 10
-    windowDuration: 60 # in seconds
-    refillRate: 10 # pieces/min
-    leakingRate: 10 # pieces/min
+  # type options includes: `sliding-window`, `fixed-window`, `token-bucket`, `leaky-bucket`
+  # `sliding-window` requires limitCapacity & window-duration
+  # `fixed-window` requires limitCapacity & window-duration
+  # `token-bucket` requires limitCapacity & refillRate
+  # `leaky-bucket` requires limitCapacity & leakingRate
+  type: leaky-bucket
+  limitCapacity: 3
+  windowDuration: 60 # in seconds
+  refillRate: 10 # pieces/min
+  leakingRate: 10 # pieces/min
