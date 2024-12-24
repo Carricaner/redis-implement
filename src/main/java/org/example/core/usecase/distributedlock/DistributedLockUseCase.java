@@ -7,11 +7,11 @@ import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DistributedLockCase {
+public class DistributedLockUseCase {
 
   private final RedissonClient redissonClient;
 
-  public DistributedLockCase(RedissonClient redissonClient) {
+  public DistributedLockUseCase(RedissonClient redissonClient) {
     this.redissonClient = redissonClient;
   }
 

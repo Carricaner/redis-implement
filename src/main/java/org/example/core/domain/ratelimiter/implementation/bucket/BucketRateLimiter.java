@@ -1,6 +1,7 @@
-package org.example.core.domain.ratelimiter;
+package org.example.core.domain.ratelimiter.implementation.bucket;
 
 import java.time.Instant;
+import org.example.core.domain.ratelimiter.RateLimiter;
 
 public abstract class BucketRateLimiter implements RateLimiter {
     public static final String KEY_PREFIX = "bucket-rate-";
