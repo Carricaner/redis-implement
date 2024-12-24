@@ -1,4 +1,4 @@
-package org.example.entrypoint.rest.controller.distributedlock;
+package org.example.entry.rest.controller.distributedlock;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.core.usecase.distributedlock.DistributedLockCase;

@@ -1,0 +1,28 @@
+[versions]
+junitVer = "5.9.2"
+vavrVer = "0.10.4"
+guavaVer = "32.1.2-jre"
+mapStructVer = "1.6.2"
+
+# Plugins
+springBootPluginVer = "3.3.1"
+springDependencyManagementPluginVer = "1.1.5"
+
+[libraries]
+# Test
+junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitVer" }
+
+# Functional Programming
+vavr = { module = "io.vavr:vavr", version.ref = "vavrVer" }
+vavrTest = { module = "io.vavr:vavr-test", version.ref = "vavrVer" }
+
+# Common
+guava = { module = "com.google.guava:guava", version.ref = "guavaVer" }
+
+# Entity Mapping
+mapStruct = { module = "org.mapstruct:mapstruct", version.ref = "mapStructVer" }
+mapStructProcessor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapStructVer" }
+
+[plugins]
+springBootPlugin = { id = "org.springframework.boot", version.ref = "springBootPluginVer" }
+springDependencyManagementPlugin = { id = "io.spring.dependency-management", version.ref = "springDependencyManagementPluginVer" }

@@ -1,6 +1,5 @@
-package org.example.entrypoint.rest.controller.bloomfilter;
+package org.example.entry.rest.controller.bloomfilter;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.example.core.usecase.bloomfilter.BloomFilterUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +15,12 @@ public class BloomFilterController {
 
   @PostMapping("/{clientId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void addClient(@PathVariable("clientId") String clientId, HttpServletRequest request) {
+  public void addClient(@PathVariable("clientId") String clientId) {
     bloomFilterUseCase.add(clientId);
   }
 
   @GetMapping("/{clientId}")
-  public boolean clientExists(
-      @PathVariable("clientId") String clientId, HttpServletRequest request) {
+  public boolean clientExists(@PathVariable("clientId") String clientId) {
     return bloomFilterUseCase.contains(clientId);
   }
 }

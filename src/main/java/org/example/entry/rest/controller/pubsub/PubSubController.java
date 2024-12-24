@@ -1,4 +1,4 @@
-package org.example.entrypoint.rest.controller.pubsub;
+package org.example.entry.rest.controller.pubsub;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.core.usecase.pubsub.PubSubUseCase;

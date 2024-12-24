@@ -1,5 +1,3 @@
-server:
-  bloom-filter:
-    properties:
-      expectedSize: 1000
-      falsePositiveRate: 0.001
+bloom-filter:
+  expectedSize: 1000
+  falsePositiveRate: 0.001
