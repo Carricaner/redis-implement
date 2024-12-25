@@ -20,7 +20,8 @@ public class RateLimiterConfigProperties {
     SLIDING_WINDOW("sliding-window"),
     FIXED_WINDOW("fixed-window"),
     TOKEN_BUCKET("token-bucket"),
-    LEAKY_BUCKET("leaky-bucket");
+    LEAKY_BUCKET("leaky-bucket"),
+    REDISSON("redisson");
 
     private final String name;
 

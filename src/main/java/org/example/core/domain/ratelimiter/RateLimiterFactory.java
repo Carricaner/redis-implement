@@ -15,14 +15,12 @@ public class RateLimiterFactory {
 
   public RateLimiter generateRateLimiter(RateLimiterType rateLimiterType) {
     return switch (rateLimiterType) {
-      case FIXED_WINDOW -> applicationContext.getBean(
-          "fixedWindowRateLimiter", RateLimiter.class);
+      case FIXED_WINDOW -> applicationContext.getBean("fixedWindowRateLimiter", RateLimiter.class);
       case SLIDING_WINDOW -> applicationContext.getBean(
           "slidingWindowRateLimiter", RateLimiter.class);
-      case TOKEN_BUCKET -> applicationContext.getBean(
-          "tokenBucketRateLimiter", RateLimiter.class);
-      case LEAKY_BUCKET -> applicationContext.getBean(
-          "leakyBucketRateLimiter", RateLimiter.class);
+      case TOKEN_BUCKET -> applicationContext.getBean("tokenBucketRateLimiter", RateLimiter.class);
+      case LEAKY_BUCKET -> applicationContext.getBean("leakyBucketRateLimiter", RateLimiter.class);
+      case REDISSON -> applicationContext.getBean("redissonRateLimiter", RateLimiter.class);
     };
   }
 }
