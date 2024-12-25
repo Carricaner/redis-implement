@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "bloom-filter")
-public class BloomFilterPropertiesConfig {
-    private int expectedSize = 1000;
+public class BloomFilterConfigProperties {
+    private long expectedSize = 1000L;
     private double falsePositiveRate = 0.001D;
 }
 

@@ -1,23 +1,23 @@
 package org.example.core.usecase.bloomfilter;
 
-import org.example.core.domain.bloomfilter.BloomFilterClient;
+import org.example.core.domain.bloomfilter.BloomFilterManager;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BloomFilterUseCaseImpl implements BloomFilterUseCase {
-    private final BloomFilterClient bloomFilterClient;
+  private final BloomFilterManager bloomFilterManager;
 
-    public BloomFilterUseCaseImpl(BloomFilterClient bloomFilterClient) {
-        this.bloomFilterClient = bloomFilterClient;
-    }
+  public BloomFilterUseCaseImpl(BloomFilterManager bloomFilterManager) {
+    this.bloomFilterManager = bloomFilterManager;
+  }
 
-    @Override
-    public void add(String element) {
-        bloomFilterClient.getBloomFilter().add(element);
-    }
+  @Override
+  public void add(String element) {
+    bloomFilterManager.add(element);
+  }
 
-    @Override
-    public boolean contains(String element) {
-        return bloomFilterClient.getBloomFilter().contains(element);
-    }
+  @Override
+  public boolean contains(String element) {
+    return bloomFilterManager.contains(element);
+  }
 }
