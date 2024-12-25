@@ -6,7 +6,7 @@ rate-limiter:
   # `leaky-bucket` requires limitCapacity & leakingRate
   # `redisson` requires limitCapacity & window-duration
   type: redisson
-  limitCapacity: 3
+  limitCapacity: 10
   windowDuration: 60 # in seconds
   refillRate: 10 # pieces/min
   leakingRate: 10 # pieces/min

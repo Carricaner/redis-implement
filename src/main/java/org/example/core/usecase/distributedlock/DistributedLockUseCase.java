@@ -1,39 +1,54 @@
 package org.example.core.usecase.distributedlock;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.redisson.api.RLock;
-import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DistributedLockUseCase {
-
   private final RedissonClient redissonClient;
+
+  private final AtomicInteger counter = new AtomicInteger(0);
 
   public DistributedLockUseCase(RedissonClient redissonClient) {
     this.redissonClient = redissonClient;
   }
 
-  public String accessReadLockAndGetTheResource() throws InterruptedException {
-    String lockName = "myLock";
-    RReadWriteLock rwlock = redissonClient.getReadWriteLock(lockName);
-    RLock lock = rwlock.readLock();
+  // Read Lock -> blocking until former release
+  public String acquireReadLock() {
+    RLock lock = redissonClient.getReadWriteLock("myLock").readLock();
+    try {
+      boolean unLocked = lock.tryLock(500, 3500, TimeUnit.MILLISECONDS);
+      return unLocked ? String.valueOf(counter.get()) : "None";
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-    // The first argument is the waiting time(s) for someone to get the lock.
-    // The second argument is the waiting time(s) for the lock when it is not unlocked by the logic
-    // below.
-    // When the period is longer then the second argument, the lock will release automatically.
-    boolean res = lock.tryLock(100, 3, TimeUnit.SECONDS);
-
-    if (res) {
-      try {
-        Thread.sleep(5000);
-        System.out.println("Everything's good!");
-      } finally {
+  // Wrote Lock -> acquire the lock or wait -> exceeds waitTime --> return false
+  public String acquireWriteLock() {
+    RLock lock = redissonClient.getReadWriteLock("myLock").writeLock();
+    boolean unLocked = false;
+    try {
+      unLocked = lock.tryLock(500, 1800, TimeUnit.MILLISECONDS);
+      if (unLocked) {
+        mockWrite();
+      }
+      return unLocked ? "Writing completed" : "Could not acquire lock. Please try again later.";
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      return "Thread was interrupted.";
+    } finally {
+      if (unLocked) {
         lock.unlock();
       }
     }
-    return "the-resource";
+  }
+
+  private void mockWrite() throws InterruptedException {
+    Thread.sleep(1500);
+    counter.addAndGet(1);
   }
 }

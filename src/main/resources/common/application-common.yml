@@ -11,3 +11,4 @@ spring:
 server:
   port: 8081
   shutdown: graceful
+  apiVersion: v1
