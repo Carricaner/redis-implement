@@ -1,7 +1,8 @@
-package org.example.entry.rest.controller.pubsub;
+package org.example.entry.rest.pubsub;
 
 import org.example.core.usecase.pubsub.PubSubUseCase;
 import org.example.core.usecase.pubsub.output.PublishMessageUsecaseOutput;
+import org.example.entry.rest.pubsub.input.PublishMessageRequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

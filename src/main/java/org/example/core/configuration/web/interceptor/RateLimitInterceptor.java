@@ -14,7 +14,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 public class RateLimitInterceptor implements HandlerInterceptor {
-
   private final RateLimiterManager rateLimiterManager;
 
   @Autowired

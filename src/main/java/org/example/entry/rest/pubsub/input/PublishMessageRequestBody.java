@@ -1,4 +1,4 @@
-package org.example.entry.rest.controller.pubsub;
+package org.example.entry.rest.pubsub.input;
 
 public record PublishMessageRequestBody(
     String topic,

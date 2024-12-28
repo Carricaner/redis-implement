@@ -1,4 +1,4 @@
-package org.example.entry.rest.controller.distributedlock;
+package org.example.entry.rest.distributedlock;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.core.domain.ratelimiter.RateLimited;

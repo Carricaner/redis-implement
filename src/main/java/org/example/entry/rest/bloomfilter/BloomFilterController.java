@@ -1,4 +1,4 @@
-package org.example.entry.rest.controller.bloomfilter;
+package org.example.entry.rest.bloomfilter;
 
 import org.example.core.domain.ratelimiter.RateLimited;
 import org.example.core.usecase.bloomfilter.BloomFilterUseCase;
