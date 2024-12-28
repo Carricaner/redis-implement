@@ -1,17 +1,18 @@
 package org.example.core.usecase.pubsub;
 
-import org.example.core.configuration.redis.pubsub.publishers.RedisMessagePublisher;
+import org.example.core.usecase.pubsub.output.PublishMessageUsecaseOutput;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PubSubUseCase {
-  private final RedisMessagePublisher redisMessagePublisher;
+  private final RedissonClient redissonClient;
 
-  public PubSubUseCase(RedisMessagePublisher redisMessagePublisher) {
-    this.redisMessagePublisher = redisMessagePublisher;
+  public PubSubUseCase(RedissonClient redissonClient) {
+    this.redissonClient = redissonClient;
   }
 
-  public void trySend(String topic, String message) {
-    redisMessagePublisher.publishMessage(topic, message);
+  public PublishMessageUsecaseOutput publishMessage(String topic, String message) {
+    return new PublishMessageUsecaseOutput(true, redissonClient.getTopic(topic).publish(message));
   }
 }

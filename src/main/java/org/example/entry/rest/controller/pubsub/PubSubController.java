@@ -1,12 +1,10 @@
 package org.example.entry.rest.controller.pubsub;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.example.core.usecase.pubsub.PubSubUseCase;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.example.core.usecase.pubsub.output.PublishMessageUsecaseOutput;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,12 +16,9 @@ public class PubSubController {
     this.pubSubUseCase = pubSubUseCase;
   }
 
-  @PostMapping("/{topic}/{message}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void clientExists(
-      @PathVariable("topic") String topic,
-      @PathVariable("message") String message,
-      HttpServletRequest request) {
-    pubSubUseCase.trySend(topic, message);
+  @PostMapping("/publish")
+  public PublishMessageUsecaseOutput publishMessage(
+      @RequestBody PublishMessageRequestBody requestBody) {
+    return pubSubUseCase.publishMessage(requestBody.topic(), requestBody.message());
   }
 }
