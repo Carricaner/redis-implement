@@ -1,3 +1,0 @@
-[submodule "redis-cluster"]
-	path = redis-cluster
-	url = https://github.com/Carricaner/redis-cluster-docker.git
