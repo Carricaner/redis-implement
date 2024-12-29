@@ -1,4 +1,5 @@
-# Redis Implementation Project
+# Redis Implementation Project 
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/ME2opz6NQmyqhFno6cPKqT/GK1356dpRPA8usjBpKgo9V/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/ME2opz6NQmyqhFno6cPKqT/GK1356dpRPA8usjBpKgo9V/tree/main)
 
 ## Description
 
