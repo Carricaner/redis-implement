@@ -4,7 +4,6 @@ executors:
   jdk-17:
     docker:
       - image: cimg/openjdk:17.0.1
-    working_directory: /reds-impl
 
 #commands:
 
@@ -24,4 +23,3 @@ workflows:
           filters:
             branches:
               only: main
-
