@@ -21,7 +21,7 @@ jobs:
       - gradle/with_cache:
           steps:
             - run:
-                command: ./gradlew clean build test
+                command: gradle clean build test
 
 workflows:
   build-test-deploy:
