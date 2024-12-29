@@ -1,24 +1,34 @@
 version: 2.1
 
+orbs:
+  gradle: circleci/gradle@3.0.0
+#  aws-cli: circleci/aws-cli@5.1.2
+#  aws-code-deploy: circleci/aws-code-deploy@3.0.0
+
 executors:
   jdk-17:
     docker:
       - image: cimg/openjdk:17.0.13-node
-
+  test-executor:
+    docker:
+      - image: cimg/openjdk:17.0.13-node
+      - image: cimg/redis:7.4
 
 jobs:
-  first-job:
+  build-and-test:
     executor: jdk-17
     steps:
-      - checkout
-      - run: java --version
-      - run: gradle --version
-
+      - gradle/with_cache:
+          steps:
+            - run:
+                command: ./gradlew clean build test
 
 workflows:
-  my-first-deploy:
+  build-test-deploy:
     jobs:
-      - first-job:
+      - build-and-test:
           filters:
             branches:
-              only: main
+              only:
+                - main
+                - dev
