@@ -1,0 +1,27 @@
+version: 2.1
+
+executors:
+  jdk-17:
+    docker:
+      - image: circleci/openjdk:17.0.1
+    working_directory: /reds-impl
+
+#commands:
+
+jobs:
+  first-job:
+    executor: jdk-17
+    steps:
+      - checkout
+      - run: java --version
+      - run: gradle --version
+
+
+workflows:
+  my-first-deploy:
+    jobs:
+      - first-job:
+          filters:
+            branches:
+              only: main
+
