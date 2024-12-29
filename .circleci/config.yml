@@ -3,7 +3,7 @@ version: 2.1
 executors:
   jdk-17:
     docker:
-      - image: circleci/openjdk:17.0.1
+      - image: cimg/openjdk:17.0.1
     working_directory: /reds-impl
 
 #commands:
