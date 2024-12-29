@@ -5,7 +5,6 @@ executors:
     docker:
       - image: cimg/openjdk:17.0.13-node
 
-#commands:
 
 jobs:
   first-job:
