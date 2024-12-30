@@ -18,6 +18,7 @@ jobs:
   build-and-test:
     executor: jdk-17
     steps:
+      - checkout
       - gradle/with_cache:
           steps:
             - run:
