@@ -6,13 +6,9 @@ orbs:
 #  aws-code-deploy: circleci/aws-code-deploy@3.0.0
 
 executors:
-  jdk-17:
-    docker:
-      - image: cimg/openjdk:17.0.13-node
   test-executor:
     docker:
       - image: cimg/openjdk:17.0.13-node
-      - image: cimg/redis:7.4
 
 jobs:
   build-and-test:
@@ -20,6 +16,8 @@ jobs:
     resource_class: large
     steps:
       - checkout
+      - setup_remote_docker: # Enable Docker for Testcontainers
+          version: default
       - gradle/with_cache:
           steps:
             - run:
