@@ -1,6 +1,0 @@
-spring:
-  redis:
-    host: redis-16463.c54.ap-northeast-1-2.ec2.redns.redis-cloud.com
-    port: 16463
-    username: default
-    password: Uw9cC07ieFTEUHx6zGLQu84wnFhaQaOT

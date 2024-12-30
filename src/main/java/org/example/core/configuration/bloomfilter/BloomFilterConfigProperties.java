@@ -1,5 +1,6 @@
 package org.example.core.configuration.bloomfilter;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -8,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "bloom-filter")
 public class BloomFilterConfigProperties {
-    private long expectedSize = 1000L;
-    private double falsePositiveRate = 0.001D;
+  private long expectedSize = 1000L;
+  private double falsePositiveRate = 0.001D;
 }
-
-
