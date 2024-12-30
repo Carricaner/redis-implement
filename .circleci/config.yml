@@ -16,13 +16,14 @@ executors:
 
 jobs:
   build-and-test:
-    executor: jdk-17
+    executor: test-executor
+    resource_class: large
     steps:
       - checkout
       - gradle/with_cache:
           steps:
             - run:
-                command: gradle clean build test
+                command: gradle clean test
 
 workflows:
   build-test-deploy:
@@ -33,3 +34,4 @@ workflows:
               only:
                 - main
                 - dev
+                - prod

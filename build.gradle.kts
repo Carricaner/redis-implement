@@ -47,6 +47,9 @@ dependencies {
     testImplementation(libs.junit)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.assertj:assertj-core:3.11.1")
+    implementation(platform("org.testcontainers:testcontainers:1.20.4"))
+    testImplementation("org.testcontainers:junit-jupiter:1.20.4")
+
 
     // Redis
     implementation("redis.clients:jedis:4.4.0")
