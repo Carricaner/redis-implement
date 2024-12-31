@@ -2,8 +2,13 @@ version: 2.1
 
 orbs:
   gradle: circleci/gradle@3.0.0
-#  aws-cli: circleci/aws-cli@5.1.2
+  aws-cli: circleci/aws-cli@5.1.2
 #  aws-code-deploy: circleci/aws-code-deploy@3.0.0
+
+parameters:
+  GIT_LATEST_COMMIT_SHA_KEY:
+    type: string
+    default: "last_commit_sha"
 
 executors:
   test-executor:
@@ -22,6 +27,23 @@ jobs:
           steps:
             - run:
                 command: gradle clean test
+  deploy:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - run:
+          name: Record the latest commit id in env
+          command: export << pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>=$(git rev-parse HEAD)
+      - aws-cli/setup:
+          profile_name: default
+      - run:
+          command: |
+            aws deploy create-deployment \
+            --application-name redis-impl \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name redis-impl-dg \
+            --description "Deployed from CircleCI" \
+            --github-location repository=Carricaner/redis-implement,commitId=<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >> | jq -r ".deploymentId"
 
 workflows:
   build-test-deploy:
@@ -32,3 +54,12 @@ workflows:
               only:
                 - dev
                 - prod
+                - main
+      - deploy:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only:
+                - prod
+                - main
