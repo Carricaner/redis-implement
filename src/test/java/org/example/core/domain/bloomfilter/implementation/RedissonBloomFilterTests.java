@@ -15,7 +15,7 @@ import org.redisson.config.Config;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-class RedissonBloomFilterTestContainer extends RedisContainerBaseTest {
+class RedissonBloomFilterTests extends RedisContainerBaseTest {
   private RedissonClient redissonClient;
 
   @BeforeEach
