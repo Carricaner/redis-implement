@@ -49,16 +49,16 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-#      - build-and-test:
-#          filters:
-#            branches:
-#              only:
-#                - dev
-#                - prod
-#                - main
+      - build-and-test:
+          filters:
+            branches:
+              only:
+                - dev
+                - prod
+                - main
       - deploy:
-#          requires:
-#            - build-and-test
+          requires:
+            - build-and-test
           filters:
             branches:
               only:
