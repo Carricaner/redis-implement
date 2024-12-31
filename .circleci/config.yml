@@ -33,11 +33,11 @@ jobs:
       - checkout
       - run:
           name: Record the latest commit id in env
-          command: export << pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>=$(git rev-parse HEAD) >> $BASH_ENV
+          command: echo "export << pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>=$(git rev-parse HEAD)" >> $BASH_ENV
       - run:
           command: |
             source $BASH_ENV 
-            echo $<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>
+            echo "The latest commit SHA is: $<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>"
 #      - aws-cli/setup:
 #          profile_name: default
 #      - run:
