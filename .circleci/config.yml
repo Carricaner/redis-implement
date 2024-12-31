@@ -34,27 +34,28 @@ jobs:
       - run:
           name: Record the latest commit id in env
           command: export << pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>=$(git rev-parse HEAD)
-      - aws-cli/setup:
-          profile_name: default
-      - run:
-          command: |
-            aws deploy create-deployment \
-            --application-name redis-impl \
-            --deployment-config-name CodeDeployDefault.OneAtATime \
-            --deployment-group-name redis-impl-dg \
-            --description "Deployed from CircleCI" \
-            --github-location repository=Carricaner/redis-implement,commitId=<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >> | jq -r ".deploymentId"
+      - run: echo ${<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>}
+#      - aws-cli/setup:
+#          profile_name: default
+#      - run:
+#          command: |
+#            aws deploy create-deployment \
+#            --application-name redis-impl \
+#            --deployment-config-name CodeDeployDefault.OneAtATime \
+#            --deployment-group-name redis-impl-dg \
+#            --description "Deployed from CircleCI" \
+#            --github-location repository=Carricaner/redis-implement,commitId=${!<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>} | jq -r ".deploymentId"
 
 workflows:
   build-test-deploy:
     jobs:
-      - build-and-test:
-          filters:
-            branches:
-              only:
-                - dev
-                - prod
-                - main
+#      - build-and-test:
+#          filters:
+#            branches:
+#              only:
+#                - dev
+#                - prod
+#                - main
       - deploy:
           requires:
             - build-and-test
