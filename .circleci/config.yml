@@ -32,22 +32,19 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Record the latest commit id in env
+          name: Record the latest commit id in CircleCI's env file
           command: echo "export << pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>=$(git rev-parse HEAD)" >> $BASH_ENV
+      - aws-cli/setup:
+          profile_name: default
       - run:
           command: |
-            source $BASH_ENV 
-            echo "The latest commit SHA is: $<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>"
-#      - aws-cli/setup:
-#          profile_name: default
-#      - run:
-#          command: |
-#            aws deploy create-deployment \
-#            --application-name redis-impl \
-#            --deployment-config-name CodeDeployDefault.OneAtATime \
-#            --deployment-group-name redis-impl-dg \
-#            --description "Deployed from CircleCI" \
-#            --github-location repository=Carricaner/redis-implement,commitId=${!<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >>} | jq -r ".deploymentId"
+            aws deploy create-deployment \
+            --application-name redis-impl \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name redis-impl-dg \
+            --description "Deployed from CircleCI" \
+            --github-location repository=Carricaner/redis-implement,commitId=$<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >> \
+            | jq -r ".deploymentId"
 
 workflows:
   build-test-deploy:
