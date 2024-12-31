@@ -6,7 +6,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-public abstract class RedisBaseTest {
+public abstract class RedisContainerBaseTest {
 
   @Container
   protected static final GenericContainer<?> redisContainer =

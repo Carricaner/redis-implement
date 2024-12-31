@@ -3,7 +3,7 @@ package org.example.core.domain.bloomfilter.implementation;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
-import org.example.container.RedisBaseTest;
+import org.example.container.RedisContainerBaseTest;
 import org.example.core.configuration.bloomfilter.BloomFilterConfigProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +15,7 @@ import org.redisson.config.Config;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-class RedissonBloomFilterTest extends RedisBaseTest {
+class RedissonBloomFilterTestContainer extends RedisContainerBaseTest {
   private RedissonClient redissonClient;
 
   @BeforeEach
