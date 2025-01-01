@@ -14,7 +14,7 @@
 - Run the app in a Docker container
   
   ```shell
-  docker compose -f ./env/dev/docker-compose.yaml up --build 
+  docker-compose -f ./env/dev/docker-compose.yaml up --build 
   ```
   
 

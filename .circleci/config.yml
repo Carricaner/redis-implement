@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   gradle: circleci/gradle@3.0.0
   aws-cli: circleci/aws-cli@5.1.2
-#  aws-code-deploy: circleci/aws-code-deploy@3.0.0
+  aws-s3: circleci/aws-s3@4.1.0
 
 parameters:
   GIT_LATEST_COMMIT_SHA_KEY:
@@ -16,7 +16,7 @@ executors:
       - image: cimg/openjdk:17.0.13-node
 
 jobs:
-  build-and-test:
+  test-build-upload:
     executor: test-executor
     resource_class: large
     steps:
@@ -26,7 +26,12 @@ jobs:
       - gradle/with_cache:
           steps:
             - run:
-                command: gradle clean test
+                command: gradle clean build
+      - aws-s3/copy:
+          from: build/libs/redis-implementation-1.0.0.jar
+          to: s3://myoptions-v2/project/redis-implementation/build/redis-implementation-1.0.0.jar
+          arguments: '--dryrun'
+
   deploy:
     executor: aws-cli/default
     steps:
@@ -49,7 +54,7 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-      - build-and-test:
+      - test-build-upload:
           filters:
             branches:
               only:
@@ -58,7 +63,7 @@ workflows:
                 - main
       - deploy:
           requires:
-            - build-and-test
+            - test-build-upload
           filters:
             branches:
               only:
