@@ -33,7 +33,7 @@ jobs:
             - redis-implementation-1.0.0.jar
 
   upload:
-    executor: aws-cli/default
+    executor: aws-s3/default
     steps:
       - attach_workspace:
           at: /tmp/workspace
