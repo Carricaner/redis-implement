@@ -16,7 +16,7 @@ executors:
       - image: cimg/openjdk:17.0.13-node
 
 jobs:
-  test-build-upload:
+  test-and-build:
     executor: test-executor
     resource_class: large
     steps:
@@ -27,6 +27,16 @@ jobs:
           steps:
             - run:
                 command: gradle clean build
+      - persist_to_workspace:
+          root: build/libs/
+          paths:
+            - redis-implementation-1.0.0.jar
+
+  upload:
+    executor: aws-cli/default
+    steps:
+      - attach_workspace:
+          at: /workspace
       - aws-s3/copy:
           from: build/libs/redis-implementation-1.0.0.jar
           to: s3://myoptions-v2/project/redis-implementation/build/redis-implementation-1.0.0.jar
@@ -52,9 +62,18 @@ jobs:
             | jq -r ".deploymentId"
 
 workflows:
-  build-test-deploy:
+  test-build-deploy:
     jobs:
-      - test-build-upload:
+      - test-and-build:
+          filters:
+            branches:
+              only:
+                - dev
+                - prod
+                - main
+      - upload:
+          requires:
+            - test-and-build
           filters:
             branches:
               only:
@@ -63,7 +82,7 @@ workflows:
                 - main
       - deploy:
           requires:
-            - test-build-upload
+            - upload
           filters:
             branches:
               only:
