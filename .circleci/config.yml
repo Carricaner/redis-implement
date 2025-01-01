@@ -72,7 +72,6 @@ workflows:
               only:
                 - dev
                 - prod
-                - main
       - upload:
           requires:
             - test-and-build
@@ -81,12 +80,11 @@ workflows:
               only:
                 - dev
                 - prod
-                - main
-#      - deploy:
-#          requires:
-#            - upload
-#          filters:
-#            branches:
-#              only:
-#                - prod
-#                - main
+      - deploy:
+          requires:
+            - upload
+          filters:
+            branches:
+              only:
+                - dev
+                - prod
