@@ -36,7 +36,7 @@ jobs:
     executor: aws-cli/default
     steps:
       - attach_workspace:
-          at: /workspace
+          at: /tmp/workspace
       - aws-s3/copy:
           from: build/libs/redis-implementation-1.0.0.jar
           to: s3://myoptions-v2/project/redis-implementation/build/redis-implementation-1.0.0.jar
