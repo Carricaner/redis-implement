@@ -37,10 +37,11 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - aws-s3/copy:
-          from: build/libs/redis-implementation-1.0.0.jar
-          to: s3://myoptions-v2/project/redis-implementation/build/redis-implementation-1.0.0.jar
-          arguments: '--dryrun'
+      - run: ls -la
+#      - aws-s3/copy:
+#          from: build/libs/redis-implementation-1.0.0.jar
+#          to: s3://myoptions-v2/project/redis-implementation/build/redis-implementation-1.0.0.jar
+#          arguments: '--dryrun'
 
   deploy:
     executor: aws-cli/default
