@@ -6,6 +6,9 @@ orbs:
   aws-s3: circleci/aws-s3@4.1.0
 
 parameters:
+  DEFAULT_WORKSPACE_DIRECTORY:
+    type: string
+    default: "/tmp/workspace"
   GIT_LATEST_COMMIT_SHA_KEY:
     type: string
     default: "last_commit_sha"
@@ -36,12 +39,10 @@ jobs:
     executor: aws-s3/default
     steps:
       - attach_workspace:
-          at: /tmp/workspace
-      - run: ls /tmp/workspace -la
-#      - aws-s3/copy:
-#          from: build/libs/redis-implementation-1.0.0.jar
-#          to: s3://myoptions-v2/project/redis-implementation/build/redis-implementation-1.0.0.jar
-#          arguments: '--dryrun'
+          at: << pipeline.parameters.DEFAULT_WORKSPACE_DIRECTORY >>
+      - aws-s3/copy:
+          from: << pipeline.parameters.DEFAULT_WORKSPACE_DIRECTORY >>/redis-implementation-1.0.0.jar
+          to: s3://myoptions-v2/project/redis-implementation/build/redis-implementation-1.0.0.jar
 
   deploy:
     executor: aws-cli/default
