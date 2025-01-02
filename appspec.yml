@@ -9,14 +9,14 @@ hooks:
       timeout: 30
       runas: ec2-user
   BeforeInstall:
-    - location: scripts/ec2/before-install.sh
+    - location: aws/ec2/script/before-install.sh
       timeout: 60
       runas: ec2-user
   ApplicationStart:
-    - location: scripts/ec2/application-start.sh
+    - location: aws/ec2/script/application-start.sh
       timeout: 120
       runas: ec2-user
   ValidateService:
-    - location: scripts/ec2/validate-service.sh
+    - location: aws/ec2/script/validate-service.sh
       timeout: 30
       runas: ec2-user
