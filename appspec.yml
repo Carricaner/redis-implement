@@ -11,7 +11,7 @@ hooks:
   BeforeInstall:
     - location: aws/ec2/script/before-install.sh
       timeout: 60
-      runas: ec2-user
+      runas: root
   ApplicationStart:
     - location: aws/ec2/script/application-start.sh
       timeout: 120
