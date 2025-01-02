@@ -8,7 +8,6 @@ ENV BUILD_JAR_NAME=${PROJECT_NAME}-${VERSION}.jar
 WORKDIR /redis-impl
 
 COPY build/libs/$BUILD_JAR_NAME .
-COPY gradlew .
 
 RUN chmod +x $BUILD_JAR_NAME
 

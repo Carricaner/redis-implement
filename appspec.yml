@@ -1,14 +1,22 @@
 version: 0.0
 os: linux
 files:
-  - source: scripts/ec2
-    destination: /home/ec2-user/scripts
+  - source: aws/ec2/script
+    destination: /home/ec2-user/script
 hooks:
+  ApplicationStop:
+    - location: aws/ec2/script/application-stop.sh
+      timeout: 30
+      runas: ec2-user
   BeforeInstall:
     - location: scripts/ec2/before-install.sh
-      timeout: 30
+      timeout: 60
       runas: ec2-user
   ApplicationStart:
     - location: scripts/ec2/application-start.sh
       timeout: 120
+      runas: ec2-user
+  ValidateService:
+    - location: scripts/ec2/validate-service.sh
+      timeout: 30
       runas: ec2-user
