@@ -1,4 +1,5 @@
 #!/bin/bash
+
 check_gh_login() {
     if ! gh auth status &>/dev/null; then
         echo "GitHub CLI is not logged in. Logging in now..."
@@ -12,30 +13,39 @@ check_gh_login() {
     fi
 }
 
-check_repo_cloned() {
+update_or_clone_repo() {
     REPO_NAME="redis-implement"
     REPO_OWNER="Carricaner"
     REPO_DIR="$REPO_NAME"
 
-#    if [ -d "$REPO_DIR" ]; then
-#      echo "Removing the existing repository..."
-#      rm -rf $REPO_DIR
-#    fi
-
-    echo "Removing the existing repository..."
-    rm -rf $REPO_DIR
-    gh repo clone "$REPO_OWNER/$REPO_NAME"
-    if [ $? -ne 0 ]; then
-        echo "Failed to clone repository. Exiting."
-        exit 1
+    if [ -d "$REPO_DIR" ]; then
+        echo "Repository '$REPO_OWNER/$REPO_NAME' already exists. Pulling latest changes..."
+        cd "$REPO_DIR" || { echo "Failed to change directory to $REPO_DIR. Exiting."; exit 1; }
+        git pull origin main || { echo "Failed to pull latest changes. Exiting."; exit 1; }
+    else
+        echo "Repository '$REPO_OWNER/$REPO_NAME' does not exist locally. Cloning now..."
+        gh repo clone "$REPO_OWNER/$REPO_NAME"
+        if [ $? -ne 0 ]; then
+            echo "Failed to clone repository. Exiting."
+            exit 1
+        fi
+        cd "$REPO_DIR" || { echo "Failed to change directory to $REPO_DIR. Exiting."; exit 1; }
     fi
-
-    # Change into the repository directory
-    cd "$REPO_DIR" || { echo "Failed to change directory to $REPO_DIR. Exiting."; exit 1; }
 }
 
+# Main script execution
 check_gh_login
-check_repo_cloned
-pwd
-ls -la
-docker-compose -f ./env/dev/docker-compose.yaml down
+update_or_clone_repo
+
+# Debugging: Print current working directory and list files
+echo "Current working directory: $(pwd)"
+echo "Contents of $(pwd):"
+ls -R
+
+# Stop Docker Compose services
+if [ -f "./env/dev/docker-compose.yaml" ]; then
+    docker-compose -f ./env/dev/docker-compose.yaml down
+else
+    echo "Error: Docker Compose file './env/dev/docker-compose.yaml' not found. Exiting."
+    exit 1
+fi
