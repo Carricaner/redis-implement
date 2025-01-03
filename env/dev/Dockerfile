@@ -7,7 +7,7 @@ ENV BUILD_JAR_NAME=${PROJECT_NAME}-${VERSION}.jar
 
 WORKDIR /redis-impl
 
-COPY /home/ec2-user/redis-implement/build/libs/$BUILD_JAR_NAME .
+COPY build/libs/$BUILD_JAR_NAME .
 
 RUN chmod +x $BUILD_JAR_NAME
 
