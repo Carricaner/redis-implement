@@ -17,15 +17,14 @@ check_repo_cloned() {
     REPO_OWNER="Carricaner"
     REPO_DIR="$REPO_NAME"
 
-    if [ ! -d "$REPO_DIR" ]; then
-        echo "Repository '$REPO_OWNER/$REPO_NAME' is not cloned. Cloning now..."
-        gh repo clone "$REPO_OWNER/$REPO_NAME"
-        if [ $? -ne 0 ]; then
-            echo "Failed to clone repository. Exiting."
-            exit 1
-        fi
-    else
-        echo "Repository '$REPO_OWNER/$REPO_NAME' is already cloned."
+    if [ -d "$REPO_DIR" ]; then
+        rm -rf $REPO_DIR
+    fi
+
+    gh repo clone "$REPO_OWNER/$REPO_NAME"
+    if [ $? -ne 0 ]; then
+        echo "Failed to clone repository. Exiting."
+        exit 1
     fi
 
     # Change into the repository directory
@@ -34,4 +33,6 @@ check_repo_cloned() {
 
 check_gh_login
 check_repo_cloned
+pwd
+ls -la
 docker-compose -f ./env/dev/docker-compose.yaml down
