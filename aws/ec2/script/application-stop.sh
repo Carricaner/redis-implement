@@ -18,6 +18,7 @@ check_repo_cloned() {
     REPO_DIR="$REPO_NAME"
 
     if [ -d "$REPO_DIR" ]; then
+      echo "Removing the existing repository..."
         rm -rf $REPO_DIR
     fi
 
