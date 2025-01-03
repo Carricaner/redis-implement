@@ -8,8 +8,8 @@ hooks:
     - location: aws/ec2/script/application-stop.sh
       timeout: 60
       runas: root
-  BeforeInstall:
-    - location: aws/ec2/script/before-install.sh
+  AfterInstall:
+    - location: aws/ec2/script/after-install.sh
       timeout: 60
       runas: root
   ApplicationStart:
