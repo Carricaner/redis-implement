@@ -60,6 +60,7 @@ jobs:
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name redis-impl-dg \
             --description "Deployed from CircleCI" \
+            --ignore-application-stop-failures \
             --github-location repository=Carricaner/redis-implement,commitId=$<< pipeline.parameters.GIT_LATEST_COMMIT_SHA_KEY >> \
             | jq -r ".deploymentId"
 
