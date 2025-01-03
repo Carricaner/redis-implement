@@ -17,11 +17,13 @@ check_repo_cloned() {
     REPO_OWNER="Carricaner"
     REPO_DIR="$REPO_NAME"
 
-    if [ -d "$REPO_DIR" ]; then
-      echo "Removing the existing repository..."
-        rm -rf $REPO_DIR
-    fi
+#    if [ -d "$REPO_DIR" ]; then
+#      echo "Removing the existing repository..."
+#      rm -rf $REPO_DIR
+#    fi
 
+    echo "Removing the existing repository..."
+    rm -rf $REPO_DIR
     gh repo clone "$REPO_OWNER/$REPO_NAME"
     if [ $? -ne 0 ]; then
         echo "Failed to clone repository. Exiting."
