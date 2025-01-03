@@ -67,25 +67,25 @@ jobs:
 workflows:
   test-build-deploy:
     jobs:
-#      - test-and-build:
-#          filters:
-#            branches:
-#              only:
-#                - dev
-#                - pro
-#                - main
-#      - upload:
-#          requires:
-#            - test-and-build
-#          filters:
-#            branches:
-#              only:
-#                - dev
-#                - prod
-#                - main
+      - test-and-build:
+          filters:
+            branches:
+              only:
+                - dev
+                - pro
+                - main
+      - upload:
+          requires:
+            - test-and-build
+          filters:
+            branches:
+              only:
+                - dev
+                - prod
+                - main
       - deploy:
-#          requires:
-#            - upload
+          requires:
+            - upload
           filters:
             branches:
               only:
