@@ -1,53 +1,71 @@
 # Real-world features with Redis [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/ME2opz6NQmyqhFno6cPKqT/GK1356dpRPA8usjBpKgo9V/tree/main.svg?style=svg&circle-token=CCIPRJ_TH5gpCTpUKuDbRVZhkZfYg_9966e532fc7572cb64b672a14d71454c466f8807)](https://dl.circleci.com/status-badge/redirect/circleci/ME2opz6NQmyqhFno6cPKqT/GK1356dpRPA8usjBpKgo9V/tree/main)
 
 ## Description
-Since Redis is a famous and widely-used in-memory storage,
-the project aims at using nowadays techniques with Redis to fulfill some real-world features,
-including:
+
+Given Redis's reputation as a widely used in-memory storage solution, this project leverages modern
+techniques to implement real-world features, including:
+
 - Rate Limiter
 - Bloom Filter
 - Distributed Lock
 - Buffer Ring
 
+## Features
+
+### Concept of Clean Architecture
+
+The whole project is designed under the concept of clean architecture and divided into two parts
+including: `Core` & `External`, as below.
+
+- `Core`
+    - the most important part of the project
+    - includes:
+        - `Domain`: most important entities in the whole project
+        - `Config`
+        - `Use case`
+    - must not reply on `External`
+    - must communicate with `External` through `Interface`
+    - needs unit tests
+    - in this way, we can extract `Core` part and place it elsewhere with ease.
+- `External`
+    - responsible for communicating with the outside world
+    - includes:
+        - `Entry`: deals with incoming requests, like HTTP requests.
+        - `Adapter` sends commands to or gets data from the outside world, like upload a file to AWS
+          S3
+    - able to use everything in `Core`
+
+<img src="./assets/redis-impl.svg" width="500" alt="my clean architecture design"/>
+
 ## Prerequisites
 
-- Docker (docker + docker compose)
+- Docker (w/ docker compose)
 - Redis
 
 ## Steps
 
-## Commands
+1. Set up Redis information in `src/main/resources/dev/redis.yml`, and the format is like:
 
-- Run the app in a Docker container
+    ```yaml
+    redis:
+      host:
+      port:
+      username:
+      password:
+    ```
 
-  ```shell
-  docker-compose -f ./env/dev/docker-compose.yaml up --build 
-  ```
+2. Run the app
 
-- Copy S3 object
+    ```shell
+    docker-compose -f ./env/dev/docker-compose.yaml up --build
+    ```
 
-  ```shell
-  aws s3 cp s3://myoptions-v2/project/redis-implementation/build/redis-implementation-1.0.0.jar build/libs/redis-implementation-1.0.0.jar
-  ```
+## Other Notes
 
-## Notes
+- If you desire using AWS Elastic Cache for Redis, setting up AWS Direct Connect & Transit Gateway
+  is required because it cannot be
+  connected publicly by default, even it is accessible for EC2s under the same VPC.
 
-- For AWS Elastic Cache, we need to set up AWS Direct Connect & Transit Gateway because it cannot be
-  connected publicly by default.
-    - However, it is accessible for the EC2 instances under the same VPC.
-- How to install docker compose
+## Future Work
 
-  ```shell
-  sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  sudo chmod +x /usr/local/bin/docker-compose
-  sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-  sudo usermod -aG docker $USER
-  ```
-
-## Todos
-
-- [] Create a start script to make it easy to start the app.
-- [] Upload docker image to ECR
-    - [] Don't clone the whole repo onto an EC2 instance -> Use only built .jar file, Dockerfile &
-      docker-compose.yml
-    - [] Upload them to AWS S3
+- [Optional] Try to upload the image to AWS ECR
