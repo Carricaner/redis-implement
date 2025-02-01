@@ -1,12 +1,20 @@
-# Redis Implementation Project
-
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/ME2opz6NQmyqhFno6cPKqT/GK1356dpRPA8usjBpKgo9V/tree/main.svg?style=svg&circle-token=CCIPRJ_TH5gpCTpUKuDbRVZhkZfYg_9966e532fc7572cb64b672a14d71454c466f8807)](https://dl.circleci.com/status-badge/redirect/circleci/ME2opz6NQmyqhFno6cPKqT/GK1356dpRPA8usjBpKgo9V/tree/main)
+# Real-world features with Redis [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/ME2opz6NQmyqhFno6cPKqT/GK1356dpRPA8usjBpKgo9V/tree/main.svg?style=svg&circle-token=CCIPRJ_TH5gpCTpUKuDbRVZhkZfYg_9966e532fc7572cb64b672a14d71454c466f8807)](https://dl.circleci.com/status-badge/redirect/circleci/ME2opz6NQmyqhFno6cPKqT/GK1356dpRPA8usjBpKgo9V/tree/main)
 
 ## Description
+Since Redis is a famous and widely-used in-memory storage,
+the project aims at using nowadays techniques with Redis to fulfill some real-world features,
+including:
+- Rate Limiter
+- Bloom Filter
+- Distributed Lock
+- Buffer Ring
 
 ## Prerequisites
 
 - Docker (docker + docker compose)
+- Redis
+
+## Steps
 
 ## Commands
 
