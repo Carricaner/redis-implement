@@ -35,7 +35,7 @@ including: `Core` & `External`, as below.
           S3
     - able to use everything in `Core`
 
-<img src="./assets/redis-impl.svg" width="500" alt="my clean architecture design"/>
+<img src="https://the-general.s3.ap-northeast-1.amazonaws.com/project/redis-impl.svg" width="500" alt="my clean architecture design"/>
 
 ### Adopts TestContainers to do the integration tests
 
