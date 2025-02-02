@@ -26,7 +26,7 @@ including: `Core` & `External`, as below.
     - must not reply on `External`
     - must communicate with `External` through `Interface`
     - needs unit tests
-    - in this way, we can extract `Core` part and place it elsewhere with ease.
+    - in this way, we can extract `Core` part and place it elsewhere with ease, which makes microservices possible.
 - `External`
     - responsible for communicating with the outside world
     - includes:
@@ -55,11 +55,11 @@ manipulate containers, which is a great option to choose to do the integration t
   ```mermaid
   flowchart TD
   A[Circle CI Executor]
-  I1(("tagged\ninstance"))
-  I2(("tagged\ninstance"))
-  I3(("untagged\ninstance"))
-  I4(("tagged\ninstance"))
-  I5(("untagged\ninstance"))
+  I1(("tagged instance"))
+  I2(("tagged instance"))
+  I3(("untagged instance"))
+  I4(("tagged instance"))
+  I5(("untagged instance"))
   
   A -->|deploy| I1
   A -->|deploy| I2
