@@ -50,7 +50,6 @@ dependencies {
     implementation(platform("org.testcontainers:testcontainers:1.20.4"))
     testImplementation("org.testcontainers:junit-jupiter:1.20.4")
 
-
     // Redis
     implementation("redis.clients:jedis:4.4.0")
     implementation("org.redisson:redisson:3.23.2")

@@ -37,6 +37,21 @@ including: `Core` & `External`, as below.
 
 <img src="./assets/redis-impl.svg" width="500" alt="my clean architecture design"/>
 
+### Adopts TestContainers to do the integration tests
+
+[TestContainers](https://testcontainers.com/) is an open source library which makes it easy to
+manipulate containers, which is a great option to choose to do the integration tests!
+
+### Used Circle CI & AWS CodeDeploy to test and deploy the project
+
+- the flow is like:
+    ```mermaid
+    flowchart LR
+    test --> build --> C[upload built jar to S3] --> deploy[deploy using AWS CodeDeploy]
+    ```
+- The benefit of using `AWS CodeDeploy` is that it can deploy the instances tagged with designated
+  tags, which increase scalability and prevent from connecting to each instance through SSH.
+
 ## Prerequisites
 
 - Docker (w/ docker compose)
