@@ -50,7 +50,23 @@ manipulate containers, which is a great option to choose to do the integration t
     test --> build --> C[upload built jar to S3] --> deploy[deploy using AWS CodeDeploy]
     ```
 - The benefit of using `AWS CodeDeploy` is that it can deploy the instances tagged with designated
-  tags, which increase scalability and prevent from connecting to each instance through SSH.
+  tags, which increase scalability and avoid managing the instances through SSH by ourselves.
+
+  ```mermaid
+  flowchart TD
+  A[Circle CI Executor]
+  I1(("tagged\ninstance"))
+  I2(("tagged\ninstance"))
+  I3(("untagged\ninstance"))
+  I4(("tagged\ninstance"))
+  I5(("untagged\ninstance"))
+  
+  A -->|deploy| I1
+  A -->|deploy| I2
+  A -.->|Do nothing...| I3
+  A -->|deploy| I4
+  A -.->|Do nothing...| I5 
+  ```
 
 ## Prerequisites
 
