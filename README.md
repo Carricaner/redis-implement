@@ -26,7 +26,8 @@ including: `Core` & `External`, as below.
     - must not reply on `External`
     - must communicate with `External` through `Interface`
     - needs unit tests
-    - in this way, we can extract `Core` part and place it elsewhere with ease, which makes microservices possible.
+    - in this way, we can extract `Core` part and place it elsewhere with ease, which makes
+      microservices possible.
 - `External`
     - responsible for communicating with the outside world
     - includes:
@@ -91,7 +92,49 @@ manipulate containers, which is a great option to choose to do the integration t
     docker-compose -f ./env/dev/docker-compose.yaml up --build
     ```
 
-## Other Notes
+## API Document
+
+### Ring Buffer
+
+- Get API request records
+    - description: The API displays every request's information which is stored in a ring buffer.
+    - HTTP Method: `GET`
+    - Endpoint: `/ring-buffer/api-records`
+
+### Distributed Lock
+
+- Get the counter's number
+    - description: The API is to acquire the lock first and then get the number of the counter.
+    - HTTP Method: `GET`
+    - Endpoint: `/distributed-lock/read-write-lock/my-lock`<br><br>
+
+- Get API request records
+    - description: The API is to acquire the lock first and then increase the number of the counter
+      by 1.
+    - HTTP Method: `POST`
+    - Endpoint: `/distributed-lock/read-write-lock/my-lock`
+
+### Bloom Filter
+
+- Check if a client's ID exists or not
+    - description: Check if a client's ID exists in a bloom filter or not.
+    - HTTP Method: `GET`
+    - Endpoint: `/bloom-filter/{clientId}`<br><br>
+
+- Mark a specific client's ID as existed
+    - description: Mark a client's ID as existed in a bloom filter.
+    - HTTP Method: `POST`
+    - Endpoint: `/bloom-filter/{clientId}`
+
+### Rate Limiter
+
+- When an API is annotated with `@RateLimited`, a rate limiter is applied.
+  Incoming requests are intercepted and rate-limited accordingly.
+- `@RateLimited` can be added on either class level or method level, and, if both added, the later
+  one will override the former one.
+- Please see the details on `org.example.core.configuration.web.interceptor`
+
+## Notes
 
 - If you desire using AWS Elastic Cache for Redis, setting up AWS Direct Connect & Transit Gateway
   is required because it cannot be
