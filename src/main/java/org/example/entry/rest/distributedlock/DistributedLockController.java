@@ -27,9 +27,4 @@ public class DistributedLockController {
   public String write(HttpServletRequest request) throws InterruptedException {
     return distributedLockUseCase.acquireWriteLock();
   }
-
-  @GetMapping("/only-for-testing")
-  public String onlyForTesting()  {
-    return "I am the hidden secret! 🦭";
-  }
 }
