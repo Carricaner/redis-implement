@@ -141,5 +141,8 @@ manipulate containers, which is a great option to choose to do the integration t
   connected publicly by default, even it is accessible for EC2s under the same VPC.
 
 ## Future Work
-
-- [Optional] Try to upload the image to AWS ECR
+- Adjust the parameters of data structures in Redis to make it more granular.
+- Use Redis Cluster (distributed)
+- Upload the image to AWS ECR and consider using AWS ECS as workers.
+- Write API Document
+- Publish the app as a library, and other projects can use the features consistently. 
